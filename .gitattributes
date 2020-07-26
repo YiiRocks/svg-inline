@@ -1,0 +1,14 @@
+/.github            export-ignore
+/cs                 export-ignore
+/tests              export-ignore
+/_config.yml        export-ignore
+/.codacy.yml        export-ignore
+/.codeclimate.yml   export-ignore
+/.editorconfig      export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/.php_cs            export-ignore
+/.scrutinizer.yml   export-ignore
+/README.md          export-ignore
+/phpcs.xml.dist     export-ignore
+/phpunit.xml.dist   export-ignore

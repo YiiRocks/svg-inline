@@ -1,0 +1,17 @@
+version: "2"
+
+checks:
+  method-complexity:
+    config:
+      threshold: 8
+
+plugins:
+  phpmd:
+    enabled: true
+    config:
+      rulesets: "codesize,design,unusedcode,tests/data/phpmd_ruleset.xml"
+
+exclude_patterns:
+- "cs/"
+- "tests/"
+

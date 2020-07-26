@@ -1,0 +1,6 @@
+/nbproject/
+/node_modules/
+/vendor/
+/composer.lock
+/package-lock.json
+/package.json
