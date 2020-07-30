@@ -20,8 +20,8 @@ class Icon
 
     /**
      * @var int The height of the icon. This will dismiss the automatic height
-     *           and width classes. If height is given without width, the latter
-     *           will be calculated from the SVG size
+     *          and width classes. If height is given without width, the latter
+     *          will be calculated from the SVG size
      */
     private int $height;
 
@@ -47,9 +47,6 @@ class Icon
      */
     public function get(string $key)
     {
-        if ($key === 'fixedWidth') {
-//            var_dump($this->$key ?? null);
-        }
         return $this->$key ?? null;
     }
 
