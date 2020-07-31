@@ -26,6 +26,11 @@ class Icon
     private int $height;
 
     /**
+     * @var string Id for the SVG tag.
+     */
+    private string $id;
+
+    /**
      * @var string Valid path to an SVG image
      */
     private string $name;
@@ -73,6 +78,11 @@ class Icon
     public function setHeight(int $value): void
     {
         $this->height = $value;
+    }
+
+    public function setId(string $value): void
+    {
+        $this->id = $value;
     }
 
     public function setName(string $value): void

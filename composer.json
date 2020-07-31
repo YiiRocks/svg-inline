@@ -3,7 +3,7 @@
     "description": "Inline SVG Images for Yii",
     "type": "yii3-extension",
     "keywords": ["yii", "yii3", "icon", "icons", "svg", "inline"],
-    "homepage": "https://yii.rocks/svg-inline",
+    "homepage": "https://www.yii.rocks/svg-inline/",
     "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,

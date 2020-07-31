@@ -1,7 +1,6 @@
 /.github            export-ignore
 /cs                 export-ignore
 /tests              export-ignore
-/_config.yml        export-ignore
 /.codacy.yml        export-ignore
 /.codeclimate.yml   export-ignore
 /.editorconfig      export-ignore

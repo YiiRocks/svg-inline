@@ -276,6 +276,7 @@ class SvgInline implements SvgInlineInterface
     {
         $this->svgProperties['aria-hidden'] = 'true';
         $this->svgProperties['role'] = 'img';
+        $this->svgProperties['id'] = $this->icon->get('id');
         $this->svgProperties['class'] = $this->class['class'];
 
         $css = $this->icon->get('css');
