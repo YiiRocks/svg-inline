@@ -7,6 +7,7 @@ class SvgInlineTest extends TestCase
     public function testBasic(): void
     {
         $this->assertStringContainsString('stroke="gold"', $this->svgInline->file('@root/tests/test.svg'));
+        $this->assertStringNotContainsString('Test Comment', $this->svgInline->file('@root/tests/test.svg'));
         $this->assertStringContainsString('stroke-width="40" stroke="currentColor" fill="none"', $this->svgInline->file('nonexistent.svg'));
     }
 

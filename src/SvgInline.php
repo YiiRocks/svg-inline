@@ -6,6 +6,7 @@ namespace YiiRocks\SvgInline;
 
 use DOMDocument;
 use DOMElement;
+use DOMXPath;
 use Psr\Container\ContainerInterface;
 use YiiRocks\SvgInline\Bootstrap\BootstrapIcon;
 use YiiRocks\SvgInline\Bootstrap\SvgInlineBootstrapInterface;
@@ -157,8 +158,13 @@ class SvgInline implements SvgInlineInterface
     public function loadSvg(): void
     {
         $iconFile = $this->icon->getName();
-        if (!$this->svg->load($iconFile)) {
-            $this->svg->load($this->fallbackIcon);
+        if (!$this->svg->load($iconFile, LIBXML_NOBLANKS)) {
+            $this->svg->load($this->fallbackIcon, LIBXML_NOBLANKS);
+        }
+
+        $xpath = new DOMXPath($this->svg);
+        foreach ($xpath->query('//comment()') as $comment) {
+            $comment->parentNode->removeChild($comment);
         }
 
         $this->svgElement = $this->svg->getElementsByTagName('svg')->item(0);
