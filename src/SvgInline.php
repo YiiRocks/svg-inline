@@ -49,7 +49,7 @@ class SvgInline implements SvgInlineInterface
     /** $var ContainerInterface $container */
     private ContainerInterface $container;
 
-    /** @var Icon|BootstrapIcon|FontawesomeIcon icon properties */
+    /** @var IconInterface icon properties */
     private Object $icon;
 
     /** @var DOMDocument SVG file */

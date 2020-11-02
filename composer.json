@@ -70,12 +70,6 @@
         "config-plugin": {
             "params": "config/params.php",
             "web": "config/web.php"
-        },
-        "config-plugin-dev": {
-            "params": [
-                "$params",
-                "config/test.php"
-            ]
         }
     },
     "config": {

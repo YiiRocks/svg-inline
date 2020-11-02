@@ -41,6 +41,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $config = require Builder::path('web');
         $this->container = new Container($config);
         $this->aliases = $this->container->get(Aliases::class);
+        $this->aliases->set('@root', dirname(__DIR__, 1));
+        $this->aliases->set('@assets', '@root/tests/assets');
+        $this->aliases->set('@assetsUrl', '/baseUrl');
+        $this->aliases->set('@vendor', '@root/vendor');
         $this->svgInline = $this->container->get(SvgInlineInterface::class);
         $this->svgInline->setFallbackIcon('@root/src/fallbackIcon.svg');
     }

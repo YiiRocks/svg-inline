@@ -7,7 +7,7 @@ namespace YiiRocks\SvgInline;
 /**
  * Icon class to store all icon properties.
  */
-class Icon
+class Icon implements IconInterface
 {
     /** @var string Additional custom classes */
     private string $class;
