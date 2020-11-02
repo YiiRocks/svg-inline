@@ -162,11 +162,7 @@ class SvgInline implements SvgInlineInterface
             $this->svg->load($this->fallbackIcon, LIBXML_NOBLANKS);
         }
 
-        $xpath = new DOMXPath($this->svg);
-        foreach ($xpath->query('//comment()') as $comment) {
-            $comment->parentNode->removeChild($comment);
-        }
-
+        $this->removeDomNodes($this->svg, '//comment()');
         $this->svgElement = $this->svg->getElementsByTagName('svg')->item(0);
     }
 
@@ -241,15 +237,28 @@ class SvgInline implements SvgInlineInterface
      */
     private function getPixelValue(string $size): int
     {
-        $size = trim($size);
-        $value = substr($size, 0, -2);
-        $unit = substr($size, -2);
+        $trimmedSize = trim($size);
+        $value = substr($trimmedSize, 0, -2);
+        $unit = substr($trimmedSize, -2);
 
         if (is_numeric($value) && isset(self::PIXEL_MAP[$unit])) {
             $size = $value * self::PIXEL_MAP[$unit];
         }
 
-        return (int) round((float) $size);
+        return (int) \round((float) $trimmedSize);
+    }
+
+    /**
+     * Removes nodes from a DOMDocument
+     *
+     * @return void
+     */
+    private function removeDomNodes(DOMDocument $dom, string $expression): void
+    {
+        $xpath = new DOMXPath($dom);
+        while ($node = $xpath->query($expression)->item(0)) {
+            $node->parentNode->removeChild($node);
+        }
     }
 
     /**
