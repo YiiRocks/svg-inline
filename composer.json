@@ -47,6 +47,12 @@
             "YiiRocks\\SvgInline\\tests\\": "tests"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "scripts": {
         "php-cs-fixer": "@php vendor/bin/php-cs-fixer fix",
         "phpcs": "@php vendor/bin/phpcs",

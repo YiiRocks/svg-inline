@@ -85,7 +85,7 @@ class SvgInline implements SvgInlineInterface
         $this->icon->$function($value[0]);
         return $this;
     }
-    
+
     /**
      * Magic function, returns the SVG string.
      *
