@@ -21,7 +21,7 @@
     "require": {
         "php": ">=7.4.0",
         "ext-dom": "*",
-        "yiisoft/aliases": "^1.0.0",
+        "yiisoft/aliases": "^1.1.0",
         "yiisoft/assets": "^1.0@dev",
         "yiisoft/composer-config-plugin": "^1.0@dev",
         "yiisoft/html": "^3.0@dev"
