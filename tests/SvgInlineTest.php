@@ -40,6 +40,11 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('id="DemoId"', $this->svgInline->file('@root/tests/test.svg')->id('DemoId'));
     }
 
+    public function testSizeConvert(): void
+    {
+        $this->assertStringContainsString('width="672" height="672"', $this->svgInline->file('@root/tests/test2.svg'));
+    }
+
     public function testTitle(): void
     {
         $this->assertStringContainsString('<title>Demo Title</title>', $this->svgInline->file('@root/tests/test.svg')->title('Demo Title'));

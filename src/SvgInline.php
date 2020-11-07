@@ -161,6 +161,7 @@ class SvgInline implements SvgInlineInterface
 
         $this->removeDomNodes($this->svg, '//comment()');
         $this->svgElement = $this->svg->getElementsByTagName('svg')->item(0);
+        $this->class = ['class' => $this->icon->get('class')];
     }
 
     /**
@@ -215,11 +216,12 @@ class SvgInline implements SvgInlineInterface
     protected function setSvgMeasurement(): void
     {
         [$svgWidth, $svgHeight] = $this->getSvgSize();
+        $this->svgProperties['width'] = $svgWidth;
+        $this->svgProperties['height'] = $svgHeight;
 
         $width = $this->icon->get('width');
         $height = $this->icon->get('height');
 
-        $this->class = ['class' => $this->icon->get('class')];
         if ($width || $height) {
             $this->svgProperties['width'] = $width ?? round($height * $svgWidth / $svgHeight);
             $this->svgProperties['height'] = $height ?? round($width * $svgHeight / $svgWidth);
@@ -235,11 +237,11 @@ class SvgInline implements SvgInlineInterface
     private function getPixelValue(string $size): int
     {
         $trimmedSize = trim($size);
-        $value = substr($trimmedSize, 0, -2);
+        $value = (int) $trimmedSize;
         $unit = substr($trimmedSize, -2);
 
-        if (is_numeric($value) && isset(self::PIXEL_MAP[$unit])) {
-            $size = $value * self::PIXEL_MAP[$unit];
+        if (isset(self::PIXEL_MAP[$unit])) {
+            $trimmedSize = $value * self::PIXEL_MAP[$unit];
         }
 
         return (int) round((float) $trimmedSize);
