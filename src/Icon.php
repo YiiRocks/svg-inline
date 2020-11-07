@@ -77,7 +77,7 @@ class Icon implements IconInterface
 
     public function setHeight(int $value): void
     {
-        $this->height = $value;
+        $this->height = abs($value);
     }
 
     public function setId(string $value): void
@@ -97,6 +97,6 @@ class Icon implements IconInterface
 
     public function setWidth(int $value): void
     {
-        $this->width = $value;
+        $this->width = abs($value);
     }
 }

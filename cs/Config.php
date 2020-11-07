@@ -28,6 +28,9 @@ class Config extends \PhpCsFixer\Config
                 'sortAlgorithm' => 'alpha',
             ],
             'ordered_imports' => [
+                'imports_order' => [
+                    'class', 'function', 'const',
+                ],
                 'sortAlgorithm' => 'alpha',
             ],
         ]);

@@ -31,6 +31,7 @@ class SvgInlineTest extends TestCase
 
     public function testHeight(): void
     {
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->height(-42));
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->height(42));
     }
 
@@ -46,6 +47,7 @@ class SvgInlineTest extends TestCase
 
     public function testWidth(): void
     {
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->width(-42));
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->width(42));
     }
 }

@@ -8,12 +8,12 @@ use DOMDocument;
 use DOMElement;
 use DOMXPath;
 use Psr\Container\ContainerInterface;
-use YiiRocks\SvgInline\Bootstrap\BootstrapIcon;
 use YiiRocks\SvgInline\Bootstrap\SvgInlineBootstrapInterface;
-use YiiRocks\SvgInline\FontAwesome\FontawesomeIcon;
 use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesomeInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Html\Html;
+
+use function round;
 
 /**
  * Fontawesome provides a quick and easy way to access icons.
@@ -73,9 +73,6 @@ class SvgInline implements SvgInlineInterface
     /**
      * Magic function, sets icon properties.
      *
-     * Supported options are listed in @method, but
-     * [no support](https://github.com/yiisoft/yii2-apidoc/issues/136) in the docs yet.
-     *
      * @param string $name  property name
      * @param array  $value property value
      * @return self updated object
@@ -110,7 +107,7 @@ class SvgInline implements SvgInlineInterface
      * Sets the Bootstrap Icon
      *
      * @param string $name name of the icon
-     * @return BootstrapIcon component object
+     * @return SvgInlineBootstrapInterface component object
      */
     public function bootstrap(string $name): SvgInlineBootstrapInterface
     {
@@ -125,7 +122,7 @@ class SvgInline implements SvgInlineInterface
      *
      * @param string $name name of the icon
      * $param null|string $style style of the icon
-     * @return FontawesomeIcon component object
+     * @return SvgInlineFontAwesomeInterface component object
      */
     public function fai(string $name, ?string $style = null): SvgInlineFontAwesomeInterface
     {
@@ -178,7 +175,7 @@ class SvgInline implements SvgInlineInterface
 
     /**
      * @see $fill
-     * @param string|null $value
+     * @param string $value
      * @return void
      */
     public function setFill(string $value): void
@@ -198,8 +195,8 @@ class SvgInline implements SvgInlineInterface
 
         if ($this->svgElement->hasAttribute('viewBox')) {
             [$xStart, $yStart, $xEnd, $yEnd] = explode(' ', $this->svgElement->getAttribute('viewBox'));
-            $viewBoxWidth = isset($xStart, $xEnd) ? $xEnd - $xStart : 0;
-            $viewBoxHeight = isset($yStart, $yEnd) ? $yEnd - $yStart : 0;
+            $viewBoxWidth = isset($xStart, $xEnd) ? (int) $xEnd - (int) $xStart : 0;
+            $viewBoxHeight = isset($yStart, $yEnd) ? (int) $yEnd - (int) $yStart : 0;
 
             if ($viewBoxWidth > 0 && $viewBoxHeight > 0) {
                 $svgWidth = $viewBoxWidth;
@@ -207,7 +204,7 @@ class SvgInline implements SvgInlineInterface
             }
         }
 
-        return [$svgWidth ?? 1, $svgHeight ?? 1];
+        return [$svgWidth, $svgHeight];
     }
 
     /**
@@ -245,7 +242,7 @@ class SvgInline implements SvgInlineInterface
             $size = $value * self::PIXEL_MAP[$unit];
         }
 
-        return (int) \round((float) $trimmedSize);
+        return (int) round((float) $trimmedSize);
     }
 
     /**
@@ -257,7 +254,9 @@ class SvgInline implements SvgInlineInterface
     {
         $xpath = new DOMXPath($dom);
         while ($node = $xpath->query($expression)->item(0)) {
-            $node->parentNode->removeChild($node);
+            if ($node->parentNode) {
+                $node->parentNode->removeChild($node);
+            }
         }
     }
 
