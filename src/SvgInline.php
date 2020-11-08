@@ -13,10 +13,12 @@ use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesomeInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Html\Html;
 
+use function array_pad;
+use function explode;
 use function round;
 
 /**
- * Fontawesome provides a quick and easy way to access icons.
+ * SvgInline provides a quick and easy way to access icons.
  */
 class SvgInline implements SvgInlineInterface
 {
@@ -96,7 +98,7 @@ class SvgInline implements SvgInlineInterface
         $this->svg = new DOMDocument();
 
         $this->loadSvg();
-        $this->setSvgMeasurement();
+        $this->setSvgSize();
         $this->setSvgProperties();
         $this->setSvgAttributes();
 
@@ -135,7 +137,7 @@ class SvgInline implements SvgInlineInterface
     /**
      * Sets the filename
      *
-     * @param string $name  name of the icon, or filename
+     * @param string $file name of the icon, or filename
      * @return self component object
      */
     public function file(string $file): self
@@ -187,43 +189,24 @@ class SvgInline implements SvgInlineInterface
     /**
      * Determines size of the SVG element.
      *
-     * @return array Width & height
-     */
-    protected function getSvgSize(): array
-    {
-        $svgWidth = $this->getPixelValue($this->svgElement->getAttribute('width'));
-        $svgHeight = $this->getPixelValue($this->svgElement->getAttribute('height'));
-
-        if ($this->svgElement->hasAttribute('viewBox')) {
-            [$xStart, $yStart, $xEnd, $yEnd] = explode(' ', $this->svgElement->getAttribute('viewBox'));
-            $viewBoxWidth = isset($xStart, $xEnd) ? (int) $xEnd - (int) $xStart : 0;
-            $viewBoxHeight = isset($yStart, $yEnd) ? (int) $yEnd - (int) $yStart : 0;
-
-            if ($viewBoxWidth > 0 && $viewBoxHeight > 0) {
-                $svgWidth = $viewBoxWidth;
-                $svgHeight = $viewBoxHeight;
-            }
-        }
-
-        return [$svgWidth, $svgHeight];
-    }
-
-    /**
-     * Prepares either the size class (default) or the width/height if either of these is given manually.
-     *
      * @return void
      */
-    protected function setSvgMeasurement(): void
+    protected function setSvgSize(): void
     {
-        [$svgWidth, $svgHeight] = $this->getSvgSize();
-        if (!$this->svgElement->hasAttribute('viewBox')) {
-            $this->svgProperties['width'] = $svgWidth;
-            $this->svgProperties['height'] = $svgHeight;
-        }
+        [$xStart, $yStart, $xEnd, $yEnd] = array_pad(explode(' ', $this->svgElement->getAttribute('viewBox')), -4, 0);
+        $this->svgProperties['width'] = $this->getPixelValue($this->svgElement->getAttribute('width'));
+        $this->svgProperties['height'] = $this->getPixelValue($this->svgElement->getAttribute('height'));
+
+        $svgWidth = ($this->svgElement->hasAttribute('viewBox'))
+            ? (int) $xEnd - (int) $xStart
+            : $this->svgProperties['width'];
+
+        $svgHeight = ($this->svgElement->hasAttribute('viewBox'))
+            ? (int) $yEnd - (int) $yStart
+            : $this->svgProperties['height'];
 
         $width = $this->icon->get('width');
         $height = $this->icon->get('height');
-
         if ($width || $height) {
             $this->svgProperties['width'] = $width ?? round($height * $svgWidth / $svgHeight);
             $this->svgProperties['height'] = $height ?? round($width * $svgHeight / $svgWidth);

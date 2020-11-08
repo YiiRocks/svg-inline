@@ -6,14 +6,14 @@ class SvgInlineTest extends TestCase
 {
     public function testBasic(): void
     {
-        $this->assertStringContainsString('stroke="gold"', $this->svgInline->file('@root/tests/test.svg'));
-        $this->assertStringNotContainsString('Test Comment', $this->svgInline->file('@root/tests/test.svg'));
+        $this->assertStringContainsString('stroke="gold"', $this->svgInline->file('@root/tests/test1.svg'));
+        $this->assertStringNotContainsString('Test Comment', $this->svgInline->file('@root/tests/test1.svg'));
         $this->assertStringContainsString('stroke-width="40" stroke="currentColor" fill="none"', $this->svgInline->file('nonexistent.svg'));
     }
 
     public function testClass(): void
     {
-        $this->assertStringContainsString('class="yourClass"', $this->svgInline->file('@root/tests/test.svg')->class('yourClass'));
+        $this->assertStringContainsString('class="yourClass"', $this->svgInline->file('@root/tests/test1.svg')->class('yourClass'));
     }
 
     public function testCss(): void
@@ -24,15 +24,18 @@ class SvgInlineTest extends TestCase
 
     public function testFill(): void
     {
-        $this->assertStringContainsString('fill="currentColor"', $this->svgInline->file('@root/tests/test.svg'));
-        $this->assertStringNotContainsString('fill="currentColor"', $this->svgInline->file('@root/tests/test.svg')->fill(''));
-        $this->assertStringContainsString('fill="#003865"', $this->svgInline->file('@root/tests/test.svg')->fill('#003865'));
+        $this->assertStringContainsString('fill="currentColor"', $this->svgInline->file('@root/tests/test1.svg'));
+        $this->assertStringNotContainsString('fill="currentColor"', $this->svgInline->file('@root/tests/test1.svg')->fill(''));
+        $this->assertStringContainsString('fill="#003865"', $this->svgInline->file('@root/tests/test1.svg')->fill('#003865'));
     }
 
     public function testHeight(): void
     {
-        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->height(-42));
-        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->height(42));
+        $this->assertStringNotContainsString(' height', $this->svgInline->file('@root/tests/test1.svg'));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test1.svg')->height(-42));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test1.svg')->height(42));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test2.svg')->height(42));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test3.svg')->height(42));
     }
 
     public function testId(): void
@@ -43,16 +46,20 @@ class SvgInlineTest extends TestCase
     public function testSizeConvert(): void
     {
         $this->assertStringContainsString('width="672" height="672"', $this->svgInline->file('@root/tests/test2.svg'));
+        $this->assertStringContainsString('width="672" height="672"', $this->svgInline->file('@root/tests/test3.svg'));
     }
 
     public function testTitle(): void
     {
-        $this->assertStringContainsString('<title>Demo Title</title>', $this->svgInline->file('@root/tests/test.svg')->title('Demo Title'));
+        $this->assertStringContainsString('<title>Demo Title</title>', $this->svgInline->file('@root/tests/test1.svg')->title('Demo Title'));
     }
 
     public function testWidth(): void
     {
-        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->width(-42));
-        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test.svg')->width(42));
+        $this->assertStringNotContainsString(' width', $this->svgInline->file('@root/tests/test1.svg'));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test1.svg')->width(-42));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test1.svg')->width(42));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test2.svg')->width(42));
+        $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test3.svg')->width(42));
     }
 }
