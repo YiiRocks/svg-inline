@@ -216,8 +216,10 @@ class SvgInline implements SvgInlineInterface
     protected function setSvgMeasurement(): void
     {
         [$svgWidth, $svgHeight] = $this->getSvgSize();
-        $this->svgProperties['width'] = $svgWidth;
-        $this->svgProperties['height'] = $svgHeight;
+        if (!$this->svgElement->hasAttribute('viewBox')) {
+            $this->svgProperties['width'] = $svgWidth;
+            $this->svgProperties['height'] = $svgHeight;
+        }
 
         $width = $this->icon->get('width');
         $height = $this->icon->get('height');
