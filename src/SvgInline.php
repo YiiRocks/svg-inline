@@ -211,6 +211,12 @@ class SvgInline implements SvgInlineInterface
             ? (int) $yEnd - (int) $yStart
             : $this->svgProperties['height'];
 
+        if ($this->svgElement->hasAttribute('viewBox')) {
+            $this->svgElement->removeAttribute('width');
+            $this->svgElement->removeAttribute('height');
+            unset($this->svgProperties['width'], $this->svgProperties['height']);
+        }
+
         $width = $this->icon->get('width');
         $height = $this->icon->get('height');
         if ($width || $height) {

@@ -11,6 +11,18 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('stroke-width="40" stroke="currentColor" fill="none"', $this->svgInline->file('nonexistent.svg'));
     }
 
+    public function testBasicBootstrap(): void
+    {
+        $this->assertStringNotContainsString('width', $this->svgInline->file('@vendor/npm-asset/bootstrap-icons/icons/award.svg'));
+        $this->assertStringNotContainsString('height', $this->svgInline->file('@vendor/npm-asset/bootstrap-icons/icons/award.svg'));
+    }
+
+    public function testBasicFontAwesome(): void
+    {
+        $this->assertStringNotContainsString('width', $this->svgInline->file('@vendor/npm-asset/fortawesome--fontawesome-free/svgs/solid/cookie.svg'));
+        $this->assertStringNotContainsString('height', $this->svgInline->file('@vendor/npm-asset/fortawesome--fontawesome-free/svgs/solid/cookie.svg'));
+    }
+
     public function testClass(): void
     {
         $this->assertStringContainsString('class="yourClass"', $this->svgInline->file('@root/tests/test1.svg')->class('yourClass'));
@@ -46,7 +58,6 @@ class SvgInlineTest extends TestCase
     public function testSizeConvert(): void
     {
         $this->assertStringContainsString('width="672" height="672"', $this->svgInline->file('@root/tests/test2.svg'));
-        $this->assertStringContainsString('width="672" height="672"', $this->svgInline->file('@root/tests/test3.svg'));
     }
 
     public function testTitle(): void
