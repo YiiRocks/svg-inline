@@ -46,8 +46,14 @@ class SvgInline implements SvgInlineInterface
     /** @var string Color of the icon. Set to empty string to disable this attribute */
     protected string $fill;
 
+    /** @var int height of the svg */
+    protected int $svgHeight;
+
     /** @var array additional properties for the icon not set with Options */
     protected array $svgProperties;
+
+    /** @var int width of the svg */
+    protected int $svgWidth;
 
     /** $var ContainerInterface $container */
     private ContainerInterface $container;
@@ -197,19 +203,19 @@ class SvgInline implements SvgInlineInterface
         $this->svgProperties['width'] = $this->getPixelValue($this->svgElement->getAttribute('width'));
         $this->svgProperties['height'] = $this->getPixelValue($this->svgElement->getAttribute('height'));
 
-        $svgWidth = ($this->svgElement->hasAttribute('viewBox'))
+        $this->svgWidth = ($this->svgElement->hasAttribute('viewBox'))
             ? (int) $xEnd - (int) $xStart
             : $this->svgProperties['width'];
 
-        $svgHeight = ($this->svgElement->hasAttribute('viewBox'))
+        $this->svgHeight = ($this->svgElement->hasAttribute('viewBox'))
             ? (int) $yEnd - (int) $yStart
             : $this->svgProperties['height'];
 
         $width = $this->icon->get('width');
         $height = $this->icon->get('height');
         if ($width || $height) {
-            $this->svgProperties['width'] = $width ?? round($height * $svgWidth / $svgHeight);
-            $this->svgProperties['height'] = $height ?? round($width * $svgHeight / $svgWidth);
+            $this->svgProperties['width'] = $width ?? round($height * $this->svgWidth / $this->svgHeight);
+            $this->svgProperties['height'] = $height ?? round($width * $this->svgHeight / $this->svgWidth);
         }
     }
 
