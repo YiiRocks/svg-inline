@@ -13,9 +13,11 @@ use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesomeInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Html\Html;
 
-use function array_pad;
 use function explode;
+use function libxml_clear_errors;
+use function libxml_use_internal_errors;
 use function round;
+use function ucfirst;
 
 /**
  * SvgInline provides a quick and easy way to access icons.
@@ -199,19 +201,16 @@ class SvgInline implements SvgInlineInterface
      */
     protected function setSvgSize(): void
     {
-        [$xStart, $yStart, $xEnd, $yEnd] = array_pad(explode(' ', $this->svgElement->getAttribute('viewBox')), -4, 0);
-        $this->svgProperties['width'] = $this->getPixelValue($this->svgElement->getAttribute('width'));
-        $this->svgProperties['height'] = $this->getPixelValue($this->svgElement->getAttribute('height'));
-
-        $this->svgWidth = ($this->svgElement->hasAttribute('viewBox'))
-            ? (int) $xEnd - (int) $xStart
-            : $this->svgProperties['width'];
-
-        $this->svgHeight = ($this->svgElement->hasAttribute('viewBox'))
-            ? (int) $yEnd - (int) $yStart
-            : $this->svgProperties['height'];
+        $this->svgWidth = $this->getPixelValue($this->svgElement->getAttribute('width'));
+        $this->svgHeight = $this->getPixelValue($this->svgElement->getAttribute('height'));
+        $this->svgProperties['width'] = $this->svgWidth;
+        $this->svgProperties['height'] = $this->svgHeight;
 
         if ($this->svgElement->hasAttribute('viewBox')) {
+            [$xStart, $yStart, $xEnd, $yEnd] = explode(' ', $this->svgElement->getAttribute('viewBox'));
+            $this->svgWidth = (int) $xEnd - (int) $xStart;
+            $this->svgHeight = (int) $yEnd - (int) $yStart;
+
             $this->svgElement->removeAttribute('width');
             $this->svgElement->removeAttribute('height');
             unset($this->svgProperties['width'], $this->svgProperties['height']);
