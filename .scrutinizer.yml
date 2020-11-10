@@ -1,10 +1,8 @@
 build:
+    dependencies:
+        override:
+            - COMPOSER_ROOT_VERSION=dev-master composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader
     nodes:
-        compatibility:
-            dependencies:
-                override:
-                    - composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader
-        tests: true
         analysis:
             tests:
                 override:
