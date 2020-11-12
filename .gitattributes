@@ -1,5 +1,4 @@
 /.github            export-ignore
-/cs                 export-ignore
 /tests              export-ignore
 /.codacy.yml        export-ignore
 /.codeclimate.yml   export-ignore
