@@ -25,7 +25,8 @@
         "yiisoft/assets": "^1.0@dev",
         "yiisoft/composer-config-plugin": "^1.0@dev",
         "yiisoft/factory": "^3.0@dev",
-        "yiisoft/html": "^3.0@dev"
+        "yiisoft/html": "^3.0@dev",
+        "yiisoft/log": "^3.0@dev"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
@@ -78,6 +79,12 @@
         "config-plugin": {
             "params": "config/params.php",
             "web": "config/web.php"
+        },
+        "config-plugin-dev": {
+            "web": [
+                "config/test.php",
+                "$web"
+            ]
         }
     },
     "config": {

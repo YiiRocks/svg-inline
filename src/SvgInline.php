@@ -117,9 +117,9 @@ class SvgInline implements SvgInlineInterface
      * Sets the Bootstrap Icon
      *
      * @param string $name name of the icon
-     * @return SvgInlineBootstrapInterface component object
+     * @return SvgInlineInterface component object
      */
-    public function bootstrap(string $name): SvgInlineBootstrapInterface
+    public function bootstrap(string $name): SvgInlineInterface
     {
         $bootstrap = $this->container->get(SvgInlineBootstrapInterface::class);
         $bootstrap->icon = $bootstrap->name($name);
@@ -132,9 +132,9 @@ class SvgInline implements SvgInlineInterface
      *
      * @param string $name name of the icon
      * $param null|string $style style of the icon
-     * @return SvgInlineFontAwesomeInterface component object
+     * @return SvgInlineInterface component object
      */
-    public function fai(string $name, ?string $style = null): SvgInlineFontAwesomeInterface
+    public function fai(string $name, ?string $style = null): SvgInlineInterface
     {
         $fai = $this->container->get(SvgInlineFontAwesomeInterface::class);
         $fai->icon = $fai->name($name, $style);
@@ -146,9 +146,9 @@ class SvgInline implements SvgInlineInterface
      * Sets the filename
      *
      * @param string $file name of the icon, or filename
-     * @return self component object
+     * @return SvgInlineInterface component object
      */
-    public function file(string $file): self
+    public function file(string $file): SvgInlineInterface
     {
         $this->icon = new Icon();
         $fileName = $this->aliases->get($file);

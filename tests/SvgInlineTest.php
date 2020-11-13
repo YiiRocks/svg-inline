@@ -13,14 +13,14 @@ class SvgInlineTest extends TestCase
 
     public function testBasicBootstrap(): void
     {
-        $this->assertStringNotContainsString('width', $this->svgInline->file('@vendor/npm-asset/bootstrap-icons/icons/award.svg'));
-        $this->assertStringNotContainsString('height', $this->svgInline->file('@vendor/npm-asset/bootstrap-icons/icons/award.svg'));
+        $this->assertStringNotContainsString('width', $this->svgInline->bootstrap('award'));
+        $this->assertStringNotContainsString('height', $this->svgInline->bootstrap('award'));
     }
 
     public function testBasicFontAwesome(): void
     {
-        $this->assertStringNotContainsString('width', $this->svgInline->file('@vendor/npm-asset/fortawesome--fontawesome-free/svgs/solid/cookie.svg'));
-        $this->assertStringNotContainsString('height', $this->svgInline->file('@vendor/npm-asset/fortawesome--fontawesome-free/svgs/solid/cookie.svg'));
+        $this->assertStringNotContainsString('width', $this->svgInline->fai('cookie'));
+        $this->assertStringNotContainsString('height', $this->svgInline->fai('cookie'));
     }
 
     public function testClass(): void
