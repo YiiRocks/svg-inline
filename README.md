@@ -29,6 +29,16 @@ composer require yiirocks/svg-inline-bootstrap
 composer require yiirocks/svg-inline-fontawesome
 ```
 
+## Usage
+
+The default configuration will enable `$svg` in any view.
+
+```php
+echo $svg->file('@assets/image.svg');
+```
+
+Available options can be found in the [documentation](https://www.yii.rocks/svg-inline/).
+
 ## Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:

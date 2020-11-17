@@ -44,7 +44,7 @@ jobs:
         run: composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader
 
       - name: Unit testing with PHPUnit
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit --colors --no-interaction
 
       - name: Static analysis with psalm
         run: vendor/bin/psalm --shepherd --stats --output-format=checkstyle | cs2pr --graceful-warnings --colorize
