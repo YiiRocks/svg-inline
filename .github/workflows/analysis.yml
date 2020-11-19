@@ -2,11 +2,11 @@ on:
   - pull_request
   - push
 
-name: analysis
+name: build
 
 jobs:
-  mutation:
-    name: PHP ${{ matrix.php-version }}-${{ matrix.os }}
+  tests:
+    name: PHP ${{ matrix.php }}-${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}
 
@@ -15,25 +15,39 @@ jobs:
         os:
           - ubuntu-latest
 
-        php-version:
+        php:
           - "7.4"
+          - "8.0"
+          - "8.1"
 
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v2"
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: "${{ matrix.php-version }}"
+          php-version: ${{ matrix.php }}
           tools: composer:v2, cs2pr
           coverage: none
 
-      - name: Install dependencies with composer
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+
+      - if: matrix.php == '7.4'
+        name: Install dependencies with composer
         run: composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+      - if: matrix.php == '8.0' || matrix.php == '8.1'
+        name: Install dependencies with composer
+        run: composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader --ignore-platform-reqs
 
       - name: Unit testing with PHPUnit
         run: vendor/bin/phpunit --colors --no-interaction
-
+        
       - name: Static analysis with psalm
         run: vendor/bin/psalm --shepherd --stats --output-format=checkstyle | cs2pr --graceful-warnings --colorize
