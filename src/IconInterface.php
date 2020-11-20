@@ -7,5 +7,5 @@ namespace YiiRocks\SvgInline;
 interface IconInterface
 {
     public function get(string $key);
-    public function getName();
+    public function getName(): string;
 }

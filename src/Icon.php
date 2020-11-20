@@ -55,6 +55,10 @@ class Icon implements IconInterface
         return $this->$key ?? null;
     }
 
+    /**
+     * @see $name
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;

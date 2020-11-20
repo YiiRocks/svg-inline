@@ -51,7 +51,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function tearDown(): void
     {
-        $this->container = null;
         $this->removeAssets('@assets');
         parent::tearDown();
     }
