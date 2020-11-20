@@ -87,7 +87,7 @@ class SvgInline implements SvgInlineInterface
      * @param array  $value property value
      * @return self updated object
      */
-    public function __call(string $name, $value): self
+    public function __call(string $name, $value): SvgInlineInterface
     {
         $function = 'set' . ucfirst($name);
         $this->icon->$function($value[0]);
