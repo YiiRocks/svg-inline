@@ -8,6 +8,7 @@ namespace YiiRocks\SvgInline;
  * @method class(string $value): self
  * @method css(array $value): self
  * @method fill(string $value): self
+ * @method fixedWidth(bool $value): self
  * @method height(int $value): self
  * @method id(string $value): self
  * @method name(string $value): self
