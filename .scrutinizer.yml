@@ -9,7 +9,6 @@ build:
                     - php-scrutinizer-run
 filter:
     excluded_paths:
-        - "cs/"
         - "tests/"
 tools:
     php_cs_fixer:

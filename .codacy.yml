@@ -1,6 +1,4 @@
 exclude_paths:
 - .github/**
-- cs/**
 - tests/**
 - vendor/**
-

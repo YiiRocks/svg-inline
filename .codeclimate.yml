@@ -9,9 +9,7 @@ plugins:
   phpmd:
     enabled: true
     config:
-      rulesets: "codesize,design,unusedcode,tests/data/phpmd_ruleset.xml"
+      rulesets: "tests/data/phpmd_ruleset.xml"
 
 exclude_patterns:
-- "cs/"
 - "tests/"
-

@@ -1,6 +1,5 @@
 <?php
 return PhpCsFixer\Config::create()
-    ->setCacheFile(__DIR__ . '/tests/runtime/php_cs.cache')
     ->setUsingCache(false)
     ->setRiskyAllowed(true)
     ->setRules([
