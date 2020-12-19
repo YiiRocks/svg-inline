@@ -61,7 +61,7 @@ class Icon implements IconInterface
      */
     public function getTitle(): string
     {
-        return $this->title ?? basename($this->name, '.svg');
+        return $this->title ?? ucfirst(basename($this->name, '.svg'));
     }
 
     public function setClass(string $value): void
