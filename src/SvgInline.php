@@ -164,7 +164,7 @@ class SvgInline implements SvgInlineInterface
      */
     public function loadSvg(): void
     {
-        $iconFile = $this->icon->getName();
+        $iconFile = $this->icon->get('name');
         if (!$this->svg->load($iconFile, LIBXML_NOBLANKS)) {
             $this->svg->load($this->fallbackIcon, LIBXML_NOBLANKS);
         }
@@ -265,11 +265,8 @@ class SvgInline implements SvgInlineInterface
      */
     private function setSvgAttributes(): void
     {
-        $title = $this->icon->get('title');
-        if ($title) {
-            $titleElement = $this->svg->createElement('title', $title);
-            $this->svgElement->insertBefore($titleElement, $this->svgElement->firstChild);
-        }
+        $titleElement = $this->svg->createElement('title', $this->icon->getTitle());
+        $this->svgElement->insertBefore($titleElement, $this->svgElement->firstChild);
 
         foreach ($this->svgProperties as $key => $value) {
             $this->svgElement->removeAttribute($key);

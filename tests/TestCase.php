@@ -39,6 +39,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->aliases->set('@assets', '@root/tests/assets');
         $this->aliases->set('@assetsUrl', '/baseUrl');
         $this->aliases->set('@vendor', '@root/vendor');
+        $this->aliases->set('@npm', '@vendor/npm-asset');
         $this->svgInline = $this->container->get(SvgInlineInterface::class);
         $this->svgInline->setFallbackIcon('@root/src/fallbackIcon.svg');
     }

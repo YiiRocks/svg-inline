@@ -59,9 +59,14 @@ class Icon implements IconInterface
      * @see $name
      * @return string
      */
-    public function getName(): string
+    public function getTitle(): string
     {
-        return $this->name;
+        if (isset($this->title)) {
+            return $this->title;
+        }
+
+        $name = basename($this->name ?? '', '.svg');
+        return $name;
     }
 
     public function setClass(string $value): void

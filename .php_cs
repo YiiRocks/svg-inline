@@ -5,14 +5,14 @@ return PhpCsFixer\Config::create()
     ->setRules([
         '@PSR2' => true,
         'ordered_class_elements' => [
-            'sortAlgorithm' => 'alpha',
+            'sort_algorithm' => 'alpha',
         ],
         'no_unused_imports' => true,
         'ordered_imports' => [
             'imports_order' => [
                 'class', 'function', 'const',
             ],
-            'sortAlgorithm' => 'alpha',
+            'sort_algorithm' => 'alpha',
         ],
     ])
     ->setFinder(
