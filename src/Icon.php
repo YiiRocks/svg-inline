@@ -35,8 +35,8 @@ class Icon implements IconInterface
      */
     private string $name;
 
-    /** @var string Sets a title to the SVG output */
-    private string $title;
+    /** @var null|string Sets a title to the SVG output */
+    private ?string $title = null;
 
     /**
      * @var int The width of the icon. This will dismiss the automatic height
@@ -61,12 +61,7 @@ class Icon implements IconInterface
      */
     public function getTitle(): string
     {
-        if (isset($this->title)) {
-            return $this->title;
-        }
-
-        $name = basename($this->name ?? '', '.svg');
-        return $name;
+        return $this->title ?? basename($this->name, '.svg');
     }
 
     public function setClass(string $value): void
