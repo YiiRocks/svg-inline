@@ -1,5 +1,10 @@
 <?php
-return PhpCsFixer\Config::create()
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__)
+;
+
+$config = new PhpCsFixer\Config();
+return $config
     ->setUsingCache(false)
     ->setRiskyAllowed(true)
     ->setRules([
@@ -10,13 +15,10 @@ return PhpCsFixer\Config::create()
         'no_unused_imports' => true,
         'ordered_imports' => [
             'imports_order' => [
-                'class', 'function', 'const',
+                'const', 'class', 'function',
             ],
             'sort_algorithm' => 'alpha',
         ],
     ])
-    ->setFinder(
-        PhpCsFixer\Finder::create()
-            ->in(__DIR__)
-    )
+    ->setFinder($finder)
 ;
