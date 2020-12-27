@@ -71,13 +71,12 @@ class SvgInline implements SvgInlineInterface
 
     /**
      * @param Aliases $aliases
-     * @return $this
+     * @param ContainerInterface $container
      */
     public function __construct(Aliases $aliases, ContainerInterface $container)
     {
         $this->aliases = $aliases;
         $this->container = $container;
-        return $this;
     }
 
     /**
