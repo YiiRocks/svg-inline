@@ -31,10 +31,12 @@
         "ext-dom": "*",
         "yiisoft/aliases": "^1.1.0",
         "yiisoft/composer-config-plugin": "^1.0",
-        "yiisoft/html": "^3.0"
+        "yiisoft/html": "^3.0",
+        "yiisoft/yii-view": "^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
+        "httpsoft/http-message": "^1.0",
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "^9.0",
         "squizlabs/php_codesniffer": "^3.5",
