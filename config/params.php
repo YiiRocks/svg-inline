@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use YiiRocks\SvgInline\UserViewInjection;
+use YiiRocks\SvgInline\SvgViewInjection;
 use Yiisoft\Factory\Definitions\Reference;
 
 return [
@@ -13,7 +13,7 @@ return [
 
     'yiisoft/yii-view' => [
         'injections' => [
-            Reference::to(UserViewInjection::class),
+            Reference::to(SvgViewInjection::class),
         ],
     ],
 ];
