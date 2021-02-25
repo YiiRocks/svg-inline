@@ -44,8 +44,8 @@
         "yiirocks/svg-inline-bootstrap": "^1.0",
         "yiirocks/svg-inline-fontawesome": "^1.0",
         "yiisoft/di": "^3.0",
-        "yiisoft/files": "^3.0",
-        "yiisoft/log": "^3.0"
+        "yiisoft/files": "^1.0",
+        "yiisoft/log": "^1.0"
     },
     "autoload": {
         "psr-4": {
