@@ -95,22 +95,13 @@ class SvgInline implements SvgInlineInterface
     }
 
     /**
-     * Magic function, returns the SVG string.
+     * Magic function, call render to return the SVG string.
      *
      * @return string SVG data
      */
     public function __toString(): string
     {
-        libxml_clear_errors();
-        libxml_use_internal_errors(true);
-        $this->svg = new DOMDocument();
-
-        $this->loadSvg();
-        $this->setSvgSize();
-        $this->setSvgProperties();
-        $this->setSvgAttributes();
-
-        return $this->svg->saveXML($this->svgElement);
+        return $this->render();
     }
 
     /**
@@ -172,6 +163,25 @@ class SvgInline implements SvgInlineInterface
         $this->removeDomNodes($this->svg, '//comment()');
         $this->svgElement = $this->svg->getElementsByTagName('svg')->item(0);
         $this->class = ['class' => $this->icon->get('class')];
+    }
+
+    /**
+     * Returns the SVG string.
+     *
+     * @return string SVG data
+     */
+    public function render(): string
+    {
+        libxml_clear_errors();
+        libxml_use_internal_errors(true);
+        $this->svg = new DOMDocument();
+
+        $this->loadSvg();
+        $this->setSvgSize();
+        $this->setSvgProperties();
+        $this->setSvgAttributes();
+
+        return $this->svg->saveXML($this->svgElement);
     }
 
     /**
