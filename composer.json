@@ -86,13 +86,12 @@
         },
         "config-plugin": {
             "common": "config/common.php",
-            "params": "config/params.php",
-            "web": "config/web.php"
+            "params": "config/params.php"
         },
         "config-plugin-dev": {
             "web": [
                 "config/test.php",
-                "$web"
+                "$common"
             ]
         }
     },
