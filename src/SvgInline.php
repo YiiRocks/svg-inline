@@ -61,7 +61,7 @@ class SvgInline implements SvgInlineInterface
     private ContainerInterface $container;
 
     /** @var IconInterface icon properties */
-    private Object $icon;
+    private IconInterface $icon;
 
     /** @var DOMDocument SVG file */
     private DOMDocument $svg;
@@ -88,9 +88,10 @@ class SvgInline implements SvgInlineInterface
      */
     public function __call(string $name, $value): SvgInlineInterface
     {
+        $new = clone $this;
         $function = 'set' . ucfirst($name);
-        $this->icon->$function($value[0]);
-        return $this;
+        $new->icon->$function($value[0]);
+        return $new;
     }
 
     /**
