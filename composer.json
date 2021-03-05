@@ -30,7 +30,6 @@
         "php": ">=7.4.0",
         "ext-dom": "*",
         "yiisoft/aliases": "^1.1.0",
-        "yiisoft/composer-config-plugin": "^1.0",
         "yiisoft/html": "^3.0",
         "yiisoft/yii-view": "^3.0"
     },
@@ -43,6 +42,7 @@
         "vimeo/psalm": "^4.1",
         "yiirocks/svg-inline-bootstrap": "^1.0",
         "yiirocks/svg-inline-fontawesome": "^1.0",
+        "yiisoft/composer-config-plugin": "^1.0",
         "yiisoft/di": "^3.0",
         "yiisoft/files": "^1.0",
         "yiisoft/log": "^1.0"
