@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 use YiiRocks\SvgInline\SvgInline;
 use YiiRocks\SvgInline\SvgInlineInterface;
 use Yiisoft\Aliases\Aliases;
-use Yiisoft\Composer\Config\Builder;
+use Yiisoft\Config\Config;
 use Yiisoft\Di\Container;
 use Yiisoft\Files\FileHelper;
 
@@ -32,8 +32,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $config = require Builder::path('web');
-        $this->container = new Container($config);
+        $config = new Config(dirname(__DIR__), '/config/packages');
+        $this->container = new Container($config->get('common'));
         $this->aliases = $this->container->get(Aliases::class);
         $this->aliases->set('@root', dirname(__DIR__, 1));
         $this->aliases->set('@assets', '@root/tests/assets');

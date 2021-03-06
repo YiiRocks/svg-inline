@@ -42,7 +42,7 @@
         "vimeo/psalm": "^4.1",
         "yiirocks/svg-inline-bootstrap": "^1.0",
         "yiirocks/svg-inline-fontawesome": "^1.0",
-        "yiisoft/composer-config-plugin": "^1.0",
+        "yiisoft/config": "^1.0",
         "yiisoft/di": "^3.0",
         "yiisoft/files": "^1.0",
         "yiisoft/log": "^1.0"
@@ -87,12 +87,6 @@
         "config-plugin": {
             "common": "config/common.php",
             "params": "config/params.php"
-        },
-        "config-plugin-dev": {
-            "web": [
-                "config/test.php",
-                "$common"
-            ]
         }
     },
     "config": {
