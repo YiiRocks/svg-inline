@@ -33,7 +33,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
         $config = new Config(dirname(__DIR__), '/config/packages');
-        $this->container = new Container($config->get('common'));
+        $this->container = new Container($config->get('test'));
         $this->aliases = $this->container->get(Aliases::class);
         $this->aliases->set('@root', dirname(__DIR__, 1));
         $this->aliases->set('@assets', '@root/tests/assets');

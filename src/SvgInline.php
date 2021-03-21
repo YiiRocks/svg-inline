@@ -12,6 +12,7 @@ use YiiRocks\SvgInline\Bootstrap\SvgInlineBootstrapInterface;
 use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesomeInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Html\Html;
+use Yiisoft\Html\NoEncodeStringableInterface;
 
 use function explode;
 use function libxml_clear_errors;
@@ -22,7 +23,7 @@ use function ucfirst;
 /**
  * SvgInline provides a quick and easy way to access icons.
  */
-class SvgInline implements SvgInlineInterface
+class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
 {
     /** @var array Values for converting various units to pixels */
     private const PIXEL_MAP = [
