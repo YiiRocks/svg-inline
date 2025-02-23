@@ -74,10 +74,14 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      * @param Aliases $aliases
      * @param ContainerInterface $container
      */
-    public function __construct(Aliases $aliases, ContainerInterface $container)
-    {
+    public function __construct(
+        Aliases $aliases,
+        ContainerInterface $container,
+        IconInterface $icon
+    ) {
         $this->aliases = $aliases;
         $this->container = $container;
+        $this->icon = $icon;
     }
 
     /**

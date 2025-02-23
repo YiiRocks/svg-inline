@@ -1,7 +1,7 @@
 {
     "name": "yiirocks/svg-inline",
     "description": "Inline SVG Images for Yii",
-    "type": "yii3-extension",
+    "type": "library",
     "keywords": [
         "yii",
         "yii3",
@@ -27,25 +27,23 @@
         "source": "https://github.com/YiiRocks/svg-inline/tree/master"
     },
     "require": {
-        "php": ">=7.4.0",
+        "php": ">=8.1",
         "ext-dom": "*",
-        "yiisoft/aliases": "^2.0",
-        "yiisoft/html": "^2.2",
-        "yiisoft/yii-view": "^4.0"
+        "yiisoft/aliases": "^3.0",
+        "yiisoft/html": "^3.9",
+        "yiisoft/yii-view-renderer": "^7.3"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "httpsoft/http-message": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.70",
+        "httpsoft/http-message": "^1.1",
         "phpmd/phpmd": "@stable",
-        "phpunit/phpunit": "^9.0",
-        "squizlabs/php_codesniffer": "^3.5",
-        "vimeo/psalm": "^4.1",
-        "yiirocks/svg-inline-bootstrap": "^1.0",
-        "yiirocks/svg-inline-fontawesome": "^1.0",
-        "yiisoft/config": "^1.0",
-        "yiisoft/di": "^3.0",
-        "yiisoft/files": "^1.0",
-        "yiisoft/log": "^1.0"
+        "phpunit/phpunit": "^10.5",
+        "squizlabs/php_codesniffer": "^3.11",
+        "yiirocks/svg-inline-bootstrap": "^1.0@dev",
+        "yiirocks/svg-inline-fontawesome": "^1.0@dev",
+        "yiisoft/config": "^1.6",
+        "yiisoft/di": "*",
+        "yiisoft/files": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -68,7 +66,7 @@
         "php-cs-fixer": "@php vendor/bin/php-cs-fixer fix",
         "phpcs": "@php vendor/bin/phpcs",
         "phpmd": "@php vendor/bin/phpmd src/ text tests/data/phpmd_ruleset.xml",
-        "phpunit": "@php vendor/bin/phpunit --colors=always"
+        "phpunit": "@php vendor/bin/phpunit"
     },
     "scripts-descriptions": {
         "php-cs-fixer": "Cleans to code with PHP Coding Standards Fixer.",
@@ -88,11 +86,14 @@
             "source-directory": "config"
         },
         "config-plugin": {
-            "common": "common.php",
+            "di-web": "di-web.php",
             "params": "params.php"
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "yiisoft/config": true
+        }
     }
 }

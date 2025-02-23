@@ -1,4 +1,4 @@
-/config/packages/
+/config/.merge-plan.php
 /nbproject/
 /vendor/
 /composer.lock

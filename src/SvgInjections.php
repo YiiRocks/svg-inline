@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace YiiRocks\SvgInline;
 
-use Yiisoft\Yii\View\ContentParametersInjectionInterface;
-use Yiisoft\Yii\View\LayoutParametersInjectionInterface;
+use Yiisoft\Yii\View\Renderer\CommonParametersInjectionInterface;
+use Yiisoft\Yii\View\Renderer\LayoutParametersInjectionInterface;
 
-final class SvgViewInjection implements ContentParametersInjectionInterface, LayoutParametersInjectionInterface
+final class SvgInjections implements CommonParametersInjectionInterface, LayoutParametersInjectionInterface
 {
     private SvgInlineInterface $svg;
 
@@ -17,7 +17,7 @@ final class SvgViewInjection implements ContentParametersInjectionInterface, Lay
         $this->svg = $svg;
     }
 
-    public function getContentParameters(): array
+    public function getCommonParameters(): array
     {
         return [
             'svg' => $this->svg,

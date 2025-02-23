@@ -50,4 +50,4 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/YiiRocks/svg-inline.svg)](https://codeclimate.com/github/YiiRocks/svg-inline/maintainability)
 [![Codacy branch grade](https://img.shields.io/codacy/grade/1a826829576d45668a766abaae2321bb/master.svg)](https://app.codacy.com/gh/YiiRocks/svg-inline)
 [![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/yiirocks/svg-inline/master.svg)](https://scrutinizer-ci.com/g/yiirocks/svg-inline/?branch=master)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/yiirocks/svg-inline/analysis)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/YiiRocks/svg-inline/analysis.yml?branch=master)

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use YiiRocks\SvgInline\SvgViewInjection;
-use Yiisoft\Factory\Definitions\Reference;
+use YiiRocks\SvgInline\SvgInjections;
+use YiiRocks\SvgInline\SvgInlineInterface;
+use Yiisoft\Definitions\Reference;
 
 return [
     'yiirocks/svg-inline' => [
@@ -11,9 +12,15 @@ return [
         'fill' => 'currentColor',
     ],
 
-    'yiisoft/yii-view' => [
+    'yiisoft/view' => [
+        'parameters' => [
+            'svg' => Reference::to(SvgInlineInterface::class),
+        ],
+    ],
+
+    'yiisoft/yii-view-renderer' => [
         'injections' => [
-            Reference::to(SvgViewInjection::class),
+            Reference::to(SvgInjections::class),
         ],
     ],
 ];

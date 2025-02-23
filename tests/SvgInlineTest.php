@@ -55,6 +55,14 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('id="DemoId"', $this->svgInline->file('@root/tests/test.svg')->id('DemoId')->render());
     }
 
+    public function testReset(): void
+    {
+        $firstRun = $this->svgInline->file('@root/tests/test1.svg')->class('yourClass')->render();
+        $secondRun = $this->svgInline->file('@root/tests/test1.svg')->render();
+
+        $this->assertNotEquals($firstRun, $secondRun);
+    }
+
     public function testSizeConvert(): void
     {
         $this->assertStringContainsString('width="672" height="672"', $this->svgInline->file('@root/tests/test2.svg')->render());
@@ -72,13 +80,5 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test1.svg')->width(42)->render());
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test2.svg')->width(42)->render());
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test3.svg')->width(42)->render());
-    }
-
-    public function testReset(): void
-    {
-        $firstRun = $this->svgInline->file('@root/tests/test1.svg')->class('yourClass')->render();
-        $secondRun = $this->svgInline->file('@root/tests/test1.svg')->render();
-
-        $this->assertNotEquals($firstRun, $secondRun);
     }
 }
