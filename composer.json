@@ -29,7 +29,7 @@
     "require": {
         "php": ">=7.4.0",
         "ext-dom": "*",
-        "yiisoft/aliases": "^2.0",
+        "yiisoft/aliases": "^3.0",
         "yiisoft/html": "^3.8",
         "yiisoft/yii-view-renderer": "^7.3"
     },
