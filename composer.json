@@ -1,7 +1,7 @@
 {
     "name": "yiirocks/svg-inline",
     "description": "Inline SVG Images for Yii",
-    "type": "yii3-extension",
+    "type": "library",
     "keywords": [
         "yii",
         "yii3",
@@ -95,7 +95,6 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "infection/extension-installer": true,
             "yiisoft/config": true
         }
     }
