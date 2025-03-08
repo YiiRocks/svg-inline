@@ -36,7 +36,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.70",
         "httpsoft/http-message": "^1.1",
-        "phpmd/phpmd": "^2.15",
+        "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "^10.5",
         "squizlabs/php_codesniffer": "^3.11",
         "vimeo/psalm": "^6.8",
@@ -88,7 +88,6 @@
             "source-directory": "config"
         },
         "config-plugin": {
-            "di": [],
             "di-web": "di-web.php",
             "params": "params.php"
         }
@@ -96,6 +95,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
+            "infection/extension-installer": true,
             "yiisoft/config": true
         }
     }
