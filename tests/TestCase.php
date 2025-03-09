@@ -10,6 +10,7 @@ use YiiRocks\SvgInline\SvgInlineInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Config\Config;
 use Yiisoft\Config\ConfigPaths;
+use Yiisoft\Config\Modifier\RecursiveMerge;
 use Yiisoft\Di\Container;
 use Yiisoft\Di\ContainerConfig;
 use Yiisoft\Files\FileHelper;
@@ -36,6 +37,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         parent::setUp();
         $config = new Config(
             new ConfigPaths(dirname(__DIR__), 'config'),
+            '/',
+            [RecursiveMerge::groups('params')]
+
         );
         $containerConfig = ContainerConfig::create()
             ->withDefinitions($config->get('di-web'));
