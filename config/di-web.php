@@ -10,9 +10,7 @@ use YiiRocks\SvgInline\SvgInlineInterface;
 return [
     SvgInlineInterface::class => [
         'class' => SvgInline::class,
-        '__construct()' => [
-            'fallbackIcon' => [$params['yiirocks/svg-inline']['fallbackIcon']],
-            'fill' => [$params['yiirocks/svg-inline']['fill']],
-        ],
+        'setFallbackIcon()' => [$params['yiirocks/svg-inline']['fallbackIcon']],
+        'setFill()' => [$params['yiirocks/svg-inline']['fill']],
     ],
 ];
