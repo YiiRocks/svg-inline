@@ -7,7 +7,7 @@ namespace YiiRocks\SvgInline;
 use Yiisoft\Yii\View\Renderer\CommonParametersInjectionInterface;
 use Yiisoft\Yii\View\Renderer\LayoutParametersInjectionInterface;
 
-final class SvgViewInjection implements CommonParametersInjectionInterface, LayoutParametersInjectionInterface
+final class SvgInjections implements CommonParametersInjectionInterface, LayoutParametersInjectionInterface
 {
     private SvgInlineInterface $svg;
 

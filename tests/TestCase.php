@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace YiiRocks\SvgInline\tests;
 
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use YiiRocks\SvgInline\SvgInline;
 use YiiRocks\SvgInline\SvgInlineInterface;
 use Yiisoft\Aliases\Aliases;
@@ -14,6 +15,7 @@ use Yiisoft\Config\Modifier\RecursiveMerge;
 use Yiisoft\Di\Container;
 use Yiisoft\Di\ContainerConfig;
 use Yiisoft\Files\FileHelper;
+use Yiisoft\Log\Logger;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -42,7 +44,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         );
         $containerConfig = ContainerConfig::create()
-            ->withDefinitions($config->get('di-web'));
+            ->withDefinitions(
+                $config->get('di')
+                +
+                $config->get('di-web')
+                +
+                [LoggerInterface::class => Logger::class]
+        );
         $this->container = new Container($containerConfig);
         $this->aliases = $this->container->get(Aliases::class);
         $this->aliases->set('@root', dirname(__DIR__));

@@ -44,7 +44,8 @@
         "yiirocks/svg-inline-fontawesome": "^1.0@dev",
         "yiisoft/config": "^1.6",
         "yiisoft/di": "*",
-        "yiisoft/files": "^2.0"
+        "yiisoft/files": "^2.0",
+        "yiisoft/log": "^2.1"
     },
     "autoload": {
         "psr-4": {
