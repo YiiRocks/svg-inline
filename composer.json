@@ -39,8 +39,8 @@
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "^10.5",
         "squizlabs/php_codesniffer": "^3.11",
-        "yiirocks/svg-inline-bootstrap": "^1.0@dev",
-        "yiirocks/svg-inline-fontawesome": "^1.0@dev",
+        "yiirocks/svg-inline-bootstrap": "^1.0",
+        "yiirocks/svg-inline-fontawesome": "^1.0",
         "yiisoft/config": "^1.6",
         "yiisoft/di": "*",
         "yiisoft/files": "^2.0"
