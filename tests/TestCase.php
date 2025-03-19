@@ -46,8 +46,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             ->withDefinitions(
                 $config->get('di')
                 +
-                $config->get('di-web')
-                +
                 [LoggerInterface::class => NullLogger::class]
             );
         $this->container = new Container($containerConfig);

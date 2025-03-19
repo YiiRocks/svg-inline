@@ -14,7 +14,6 @@
     "homepage": "https://www.yii.rocks/svg-inline/",
     "license": "MIT",
     "minimum-stability": "dev",
-    "prefer-stable": true,
     "authors": [
         {
             "name": "Mr.42",
@@ -86,7 +85,7 @@
             "source-directory": "config"
         },
         "config-plugin": {
-            "di-web": "di-web.php",
+            "di": "di.php",
             "params": "params.php"
         }
     },
