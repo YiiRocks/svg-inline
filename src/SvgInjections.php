@@ -17,6 +17,7 @@ final class SvgInjections implements CommonParametersInjectionInterface, LayoutP
         $this->svg = $svg;
     }
 
+    #[\Override]
     public function getCommonParameters(): array
     {
         return [
@@ -24,6 +25,7 @@ final class SvgInjections implements CommonParametersInjectionInterface, LayoutP
         ];
     }
 
+    #[\Override]
     public function getLayoutParameters(): array
     {
         return [

@@ -6,9 +6,12 @@ namespace YiiRocks\SvgInline;
 
 use DOMDocument;
 use DOMElement;
+use DOMNode;
 use DOMXPath;
 use Psr\Container\ContainerInterface;
+use YiiRocks\SvgInline\Bootstrap\SvgInlineBootstrap;
 use YiiRocks\SvgInline\Bootstrap\SvgInlineBootstrapInterface;
+use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesome;
 use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesomeInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Html\Html;
@@ -26,6 +29,7 @@ use function ucfirst;
 class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
 {
     /** @var array Values for converting various units to pixels */
+    /** @psalm-suppress InvalidOperand */
     private const PIXEL_MAP = [
         'px' => 1,
         'em' => 16,
@@ -41,22 +45,25 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     protected Aliases $aliases;
 
     /** @var array Class property */
+    /** @psalm-suppress PropertyNotSetInConstructor */
     protected array $class;
 
     /** @var string Backup icon in case requested icon cannot be found */
+    /** @psalm-suppress PropertyNotSetInConstructor */
     protected string $fallbackIcon;
 
     /** @var string Color of the icon. Set to empty string to disable this attribute */
+    /** @psalm-suppress PropertyNotSetInConstructor */
     protected string $fill;
 
     /** @var int height of the svg */
-    protected int $svgHeight;
+    protected ?int $svgHeight = null;
 
     /** @var array additional properties for the icon not set with Options */
-    protected array $svgProperties;
+    protected ?array $svgProperties = null;
 
     /** @var int width of the svg */
-    protected int $svgWidth;
+    protected ?int $svgWidth = null;
 
     /** $var ContainerInterface $container */
     private ContainerInterface $container;
@@ -65,10 +72,10 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     private IconInterface $icon;
 
     /** @var DOMDocument SVG file */
-    private DOMDocument $svg;
+    private ?DOMDocument $svg = null;
 
     /** @var DOMElement SVG */
-    private DOMElement $svgElement;
+    private ?DOMElement $svgElement = null;
 
     /**
      * @param Aliases $aliases
@@ -91,7 +98,8 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      * @param array  $value property value
      * @return self updated object
      */
-    public function __call(string $name, $value): SvgInlineInterface
+    #[\Override]
+    public function __call(string $name, array $value): SvgInlineInterface
     {
         $new = clone $this;
         $function = 'set' . ucfirst($name);
@@ -115,9 +123,12 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      * @param string $name name of the icon
      * @return SvgInlineInterface component object
      */
+    #[\Override]
     public function bootstrap(string $name): SvgInlineInterface
     {
+        /** @psalm-var SvgInlineBootstrap $bootstrap */
         $bootstrap = $this->container->get(SvgInlineBootstrapInterface::class);
+		/** @psalm-suppress InaccessibleProperty */
         $bootstrap->icon = $bootstrap->name($name);
 
         return $bootstrap;
@@ -127,12 +138,15 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      * Sets the Font Awesome Icon
      *
      * @param string $name name of the icon
-     * $param null|string $style style of the icon
+     * @param null|string $style style of the icon
      * @return SvgInlineInterface component object
      */
+    #[\Override]
     public function fai(string $name, ?string $style = null): SvgInlineInterface
     {
+        /** @psalm-var SvgInlineFontAwesome $fai */
         $fai = $this->container->get(SvgInlineFontAwesomeInterface::class);
+		/** @psalm-suppress InaccessibleProperty */
         $fai->icon = $fai->name($name, $style);
 
         return $fai;
@@ -144,6 +158,7 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      * @param string $file name of the icon, or filename
      * @return SvgInlineInterface component object
      */
+    #[\Override]
     public function file(string $file): SvgInlineInterface
     {
         $this->icon = new Icon();
@@ -154,18 +169,20 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     }
 
     /**
-     * Load Font Awesome SVG file. Falls back to default if not found.
+     * Load SVG file. Falls back to default if not found.
      *
      * @see $fallbackIcon
      */
     public function loadSvg(): void
     {
-        $iconFile = $this->icon->get('name');
+        $iconFile = (string) $this->icon->get('name');
+        /** @psalm-var DOMDocument $this->svg */
         if (!$this->svg->load($iconFile, LIBXML_NOBLANKS)) {
             $this->svg->load($this->fallbackIcon, LIBXML_NOBLANKS);
         }
 
         $this->removeDomNodes($this->svg, '//comment()');
+        /** @psalm-var DOMElement $this->svgElement */
         $this->svgElement = $this->svg->getElementsByTagName('svg')->item(0);
         $this->class = ['class' => $this->icon->get('class')];
     }
@@ -216,6 +233,7 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      */
     protected function setSvgSize(): void
     {
+        /** @psalm-var DOMElement $this->svgElement */
         $this->svgWidth = $this->getPixelValue($this->svgElement->getAttribute('width'));
         $this->svgHeight = $this->getPixelValue($this->svgElement->getAttribute('height'));
         $this->svgProperties['width'] = $this->svgWidth;
@@ -234,8 +252,8 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
         $width = $this->icon->get('width');
         $height = $this->icon->get('height');
         if ($width || $height) {
-            $this->svgProperties['width'] = $width ?? round($height * $this->svgWidth / $this->svgHeight);
-            $this->svgProperties['height'] = $height ?? round($width * $this->svgHeight / $this->svgWidth);
+            $this->svgProperties['width'] = $width ?? round((int) $height * $this->svgWidth / $this->svgHeight);
+            $this->svgProperties['height'] = $height ?? round((int) $width * $this->svgHeight / $this->svgWidth);
         }
     }
 
@@ -248,11 +266,10 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     private function getPixelValue(string $size): int
     {
         $trimmedSize = trim($size);
-        $value = (int) $trimmedSize;
         $unit = substr($trimmedSize, -2);
 
         if (isset(self::PIXEL_MAP[$unit])) {
-            $trimmedSize = $value * self::PIXEL_MAP[$unit];
+            $trimmedSize = (float) $trimmedSize * (float) self::PIXEL_MAP[$unit];
         }
 
         return (int) round((float) $trimmedSize);
@@ -261,13 +278,15 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     /**
      * Removes nodes from a DOMDocument
      *
+     * @param DOMDocument $dom
+     * @string $expression
      * @return void
      */
     private function removeDomNodes(DOMDocument $dom, string $expression): void
     {
         $xpath = new DOMXPath($dom);
         while ($node = $xpath->query($expression)->item(0)) {
-            if ($node->parentNode) {
+            if ($node instanceof DOMNode && $node->parentNode) {
                 $node->parentNode->removeChild($node);
             }
         }
@@ -280,13 +299,16 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      */
     private function setSvgAttributes(): void
     {
+        /** @psalm-var DOMDocument $this->svg */
         $titleElement = $this->svg->createElement('title', $this->icon->getTitle());
+        /** @psalm-var DOMElement $this->svgElement */
         $this->svgElement->insertBefore($titleElement, $this->svgElement->firstChild);
 
+        /** @psalm-var array $this->svgProperties */
         foreach ($this->svgProperties as $key => $value) {
-            $this->svgElement->removeAttribute($key);
+            $this->svgElement->removeAttribute((string) $key);
             if (!empty($value)) {
-                $this->svgElement->setAttribute($key, (string) $value);
+                $this->svgElement->setAttribute((string) $key, (string) $value);
             }
         }
     }
@@ -305,6 +327,7 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
 
         $css = $this->icon->get('css');
         if (is_array($css)) {
+            /** @psalm-var array<string, string> $css */
             $this->svgProperties['style'] = Html::cssStyleFromArray($css);
         }
 

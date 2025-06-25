@@ -10,30 +10,30 @@ namespace YiiRocks\SvgInline;
 class Icon implements IconInterface
 {
     /** @var string Additional custom classes */
-    private string $class;
+    private ?string $class = null;
 
     /** @var array Additional CSS attributes */
-    private array $css;
+    private ?array $css = null;
 
     /** @var string Color of the icon. Set to empty string to disable this attribute */
-    private string $fill;
+    private ?string $fill = null;
 
     /**
      * @var int The height of the icon. This will dismiss the automatic height
      *          and width classes. If height is given without width, the latter
      *          will be calculated from the SVG size
      */
-    private int $height;
+    private ?int $height = null;
 
     /**
      * @var string Id for the SVG tag.
      */
-    private string $id;
+    private ?string $id = null;
 
     /**
      * @var string Valid path to an SVG image
      */
-    private string $name;
+    private string $name = '';
 
     /** @var null|string Sets a title to the SVG output */
     private ?string $title = null;
@@ -43,14 +43,15 @@ class Icon implements IconInterface
      *          and width classes. If `width` is given without `height`, the
      *          latter will be calculated from the SVG size
      */
-    private int $width;
+    private ?int $width = null;
 
     /**
      * @see $icon
      * @param string $key
      * @return mixed
      */
-    public function get(string $key)
+    #[\Override]
+    public function get(string $key): mixed
     {
         return $this->$key ?? null;
     }
@@ -59,6 +60,7 @@ class Icon implements IconInterface
      * @see $name
      * @return string
      */
+    #[\Override]
     public function getTitle(): string
     {
         return $this->title ?? ucfirst(basename($this->name, '.svg'));

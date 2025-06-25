@@ -17,7 +17,7 @@ namespace YiiRocks\SvgInline;
  */
 interface SvgInlineInterface
 {
-    public function __call(string $name, $value): self;
+    public function __call(string $name, array $value): self;
     public function bootstrap(string $name): self;
     public function fai(string $name, ?string $style = null): self;
     public function file(string $file): self;

@@ -2,7 +2,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         cacheResultFile="tests/runtime/phpunit.result.cache"
          requireCoverageMetadata="false"
          beStrictAboutCoverageMetadata="true"
          beStrictAboutOutputDuringTests="true"
@@ -11,21 +10,18 @@
          failOnWarning="true"
          stopOnFailure="false"
          colors="true"
-         displayDetailsOnPhpunitDeprecations="true"
 >
-    <php>
-        <ini name="error_reporting" value="-1"/>
-    </php>
-
-    <testsuites>
-        <testsuite name="YiiRocks Test Suite">
-            <directory>./tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <source>
-        <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-    </source>
+  <php>
+    <ini name="error_reporting" value="-1"/>
+  </php>
+  <testsuites>
+    <testsuite name="YiiRocks Test Suite">
+      <directory>./tests</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+  </source>
 </phpunit>
