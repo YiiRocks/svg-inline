@@ -128,7 +128,7 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     {
         /** @psalm-var SvgInlineBootstrap $bootstrap */
         $bootstrap = $this->container->get(SvgInlineBootstrapInterface::class);
-		/** @psalm-suppress InaccessibleProperty */
+        /** @psalm-suppress InaccessibleProperty */
         $bootstrap->icon = $bootstrap->name($name);
 
         return $bootstrap;
@@ -146,7 +146,7 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     {
         /** @psalm-var SvgInlineFontAwesome $fai */
         $fai = $this->container->get(SvgInlineFontAwesomeInterface::class);
-		/** @psalm-suppress InaccessibleProperty */
+        /** @psalm-suppress InaccessibleProperty */
         $fai->icon = $fai->name($name, $style);
 
         return $fai;

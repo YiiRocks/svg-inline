@@ -41,13 +41,13 @@ Available options can be found in the [documentation](https://www.yii.rocks/svg-
 
 ## Unit testing
 
-The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
+The package is tested with [Psalm](https://psalm.dev/) and [PHPUnit](https://phpunit.de/). To run tests:
 
 ```bash
-./vendor/bin/phpunit
+composer psalm
+composer phpunit
 ```
 
 [![Maintainability](https://qlty.sh/badges/4cb2a6ba-29f4-4933-883c-1b1ff0f60825/maintainability.svg)](https://qlty.sh/gh/YiiRocks/projects/svg-inline)
 [![Codacy branch grade](https://img.shields.io/codacy/grade/1a826829576d45668a766abaae2321bb/master.svg)](https://app.codacy.com/gh/YiiRocks/svg-inline)
-[![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/yiirocks/svg-inline/master.svg)](https://scrutinizer-ci.com/g/yiirocks/svg-inline/?branch=master)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/YiiRocks/svg-inline/analysis.yml?branch=master)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/YiiRocks/svg-inline/phpunit.yml?branch=master)
