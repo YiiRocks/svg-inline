@@ -52,7 +52,8 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     /** @psalm-suppress PropertyNotSetInConstructor */
     protected string $fallbackIcon;
 
-    /** @var string Color of the icon. Set to empty string to disable this attribute */
+    /** @var string Color of the icon. Set to empty string to disable this attribute
+     *              Applies only to SVG tag, not any paths below */
     /** @psalm-suppress PropertyNotSetInConstructor */
     protected string $fill;
 
