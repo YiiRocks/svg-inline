@@ -29,7 +29,7 @@ use function ucfirst;
 class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
 {
     /** @var array Values for converting various units to pixels */
-    /** @psalm-suppress InvalidOperand */
+    /** @psalm-suppress InvalidOperand, MissingClassConstType */
     private const PIXEL_MAP = [
         'px' => 1,
         'em' => 16,
