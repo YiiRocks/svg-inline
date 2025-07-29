@@ -19,20 +19,9 @@ use Yiisoft\Files\FileHelper;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Aliases $aliases
-     */
-    protected $aliases;
-
-    /**
-     * @var SvgInline $svgInline
-     */
-    protected $svgInline;
-
-    /**
-     * @var ContainerInterface $container
-     */
-    private $container;
+    protected Aliases $aliases;
+    protected SvgInline $svgInline;
+    private ContainerInterface $container;
 
     protected function setUp(): void
     {
