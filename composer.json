@@ -26,7 +26,7 @@
         "source": "https://github.com/YiiRocks/svg-inline/tree/master"
     },
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-dom": "*",
         "yiisoft/aliases": "^3.0",
         "yiisoft/html": "^3.9",
