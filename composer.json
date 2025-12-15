@@ -14,6 +14,7 @@
     "homepage": "https://www.yii.rocks/svg-inline/",
     "license": "MIT",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Mr.42",
@@ -34,16 +35,16 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "@stable",
-        "httpsoft/http-message": "^1.1",
+        "httpsoft/http-message": "@stable",
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "@stable",
         "squizlabs/php_codesniffer": "@stable",
         "vimeo/psalm": "@stable",
-        "yiirocks/svg-inline-bootstrap": "^1.0",
-        "yiirocks/svg-inline-fontawesome": "^1.0",
-        "yiisoft/config": "^1.6",
-        "yiisoft/di": "*",
-        "yiisoft/files": "^2.0"
+        "yiirocks/svg-inline-bootstrap": "*",
+        "yiirocks/svg-inline-fontawesome": "*",
+        "yiisoft/config": "@stable",
+        "yiisoft/di": "@stable",
+        "yiisoft/files": "@stable"
     },
     "autoload": {
         "psr-4": {
