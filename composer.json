@@ -30,7 +30,7 @@
         "php": ">=8.2",
         "ext-dom": "*",
         "yiisoft/aliases": "^3.0",
-        "yiisoft/html": "^3.9",
+        "yiisoft/html": "^3.9 || ^4.0",
         "yiisoft/yii-view-renderer": "^7.3"
     },
     "require-dev": {
