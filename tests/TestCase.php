@@ -21,7 +21,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected Aliases $aliases;
     protected SvgInline $svgInline;
-    private ContainerInterface $container;
+    protected ContainerInterface $container;
 
     protected function setUp(): void
     {
