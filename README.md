@@ -13,6 +13,7 @@ SVG Images inline.
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/yiirocks/svg-inline.svg)](https://php.net/)
 [![Packagist](https://img.shields.io/packagist/dt/yiirocks/svg-inline.svg)](https://packagist.org/packages/yiirocks/svg-inline)
 [![GitHub](https://img.shields.io/github/license/yiirocks/svg-inline.svg)](https://github.com/yiirocks/svg-inline/blob/master/LICENSE)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/yiirocks/svg-inline/build.yml?branch=master)](https://github.com/yiirocks/svg-inline/actions)
 
 ## Installation
 
@@ -41,13 +42,14 @@ Available options can be found in the [documentation](https://www.yii.rocks/svg-
 
 ## Unit testing
 
-The package is tested with [Psalm](https://psalm.dev/) and [PHPUnit](https://phpunit.de/). To run tests:
+The package is tested with [Psalm](https://psalm.dev/), [PHPUnit](https://phpunit.de/) and
+[Infection](https://infection.github.io/) mutation testing. To run tests:
 
 ```bash
 composer psalm
 composer phpunit
+composer infection
 ```
 
 [![Maintainability](https://qlty.sh/badges/4cb2a6ba-29f4-4933-883c-1b1ff0f60825/maintainability.svg)](https://qlty.sh/gh/YiiRocks/projects/svg-inline)
 [![Codacy branch grade](https://img.shields.io/codacy/grade/1a826829576d45668a766abaae2321bb/master.svg)](https://app.codacy.com/gh/YiiRocks/svg-inline)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/YiiRocks/svg-inline/phpunit.yml?branch=master)

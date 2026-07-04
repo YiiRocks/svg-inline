@@ -1,0 +1,14 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ],
+        "excludes": [
+            "resources"
+        ]
+    },
+    "timeout": 60,
+    "maxTimeouts": 1000,
+    "minMsi": 100,
+    "minCoveredMsi": 100
+}

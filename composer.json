@@ -27,7 +27,7 @@
         "source": "https://github.com/YiiRocks/svg-inline/tree/master"
     },
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "ext-dom": "*",
         "yiisoft/aliases": "^3.0",
         "yiisoft/html": "^3.9 || ^4.0",
@@ -36,10 +36,11 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "@stable",
         "httpsoft/http-message": "@stable",
+        "infection/infection": "^0.34.0",
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "@stable",
         "squizlabs/php_codesniffer": "@stable",
-        "vimeo/psalm": "@stable",
+        "vimeo/psalm": "^6.0",
         "yiirocks/svg-inline-bootstrap": "*",
         "yiirocks/svg-inline-fontawesome": "*",
         "yiisoft/config": "@stable",
@@ -68,14 +69,16 @@
         "phpcs": "@php vendor/bin/phpcs",
         "phpmd": "@php vendor/bin/phpmd src/ text tests/data/phpmd_ruleset.xml",
         "phpunit": "@php vendor/bin/phpunit",
-        "psalm": "@php vendor/bin/psalm"
+        "psalm": "@php vendor/bin/psalm",
+        "infection": "@php vendor/bin/infection --configuration=infection.json --min-msi=100 --min-covered-msi=100"
     },
     "scripts-descriptions": {
         "php-cs-fixer": "Cleans to code with PHP Coding Standards Fixer.",
         "phpcs": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
         "phpmd": "PHP Mess Detector.",
         "phpunit": "PHPUnit - programmer-oriented testing framework.",
-        "psalm": "Psalm - static analysis tool for finding errors in PHP applications."
+        "psalm": "Psalm - static analysis tool for finding errors in PHP applications.",
+        "infection": "Infection - PHP Mutation Testing Framework."
     },
     "suggest": {
         "yiirocks/svg-inline-bootstrap": "Bootstrap Icons are designed to work with Bootstrap components, from form controls to navigation.",
@@ -96,6 +99,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
+            "infection/extension-installer": true,
             "yiisoft/config": true
         }
     }

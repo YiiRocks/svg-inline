@@ -28,9 +28,9 @@ use function ucfirst;
  */
 class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
 {
-    /** @var array Values for converting various units to pixels */
-    /** @psalm-suppress InvalidOperand, MissingClassConstType */
-    private const PIXEL_MAP = [
+    /** @var array<string, float|int> Values for converting various units to pixels */
+    /** @psalm-suppress InvalidOperand */
+    private const array PIXEL_MAP = [
         'px' => 1,
         'em' => 16,
         'ex' => 16 / 2,
@@ -103,6 +103,7 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     public function __call(string $name, array $value): SvgInlineInterface
     {
         $new = clone $this;
+        /** @infection-ignore-all PHP method names are case-insensitive, so ucfirst() cannot be observed */
         $function = 'set' . ucfirst($name);
         $new->icon->$function($value[0]);
         return $new;
@@ -170,25 +171,6 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     }
 
     /**
-     * Load SVG file. Falls back to default if not found.
-     *
-     * @see $fallbackIcon
-     */
-    public function loadSvg(): void
-    {
-        $iconFile = (string) $this->icon->get('name');
-        /** @psalm-var DOMDocument $this->svg */
-        if (!$this->svg->load($iconFile, LIBXML_NOBLANKS)) {
-            $this->svg->load($this->fallbackIcon, LIBXML_NOBLANKS);
-        }
-
-        $this->removeDomNodes($this->svg, '//comment()');
-        /** @psalm-var DOMElement $this->svgElement */
-        $this->svgElement = $this->svg->getElementsByTagName('svg')->item(0);
-        $this->class = ['class' => $this->icon->get('class')];
-    }
-
-    /**
      * Returns the SVG string.
      *
      * @return string SVG data
@@ -253,8 +235,12 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
         $width = $this->icon->get('width');
         $height = $this->icon->get('height');
         if ($width || $height) {
-            $this->svgProperties['width'] = $width ?? round((int) $height * $this->svgWidth / $this->svgHeight);
-            $this->svgProperties['height'] = $height ?? round((int) $width * $this->svgHeight / $this->svgWidth);
+            /** @infection-ignore-all Icon::$width/$height are already typed ?int, casting is a no-op */
+            $castWidth = (int) $width;
+            /** @infection-ignore-all Icon::$width/$height are already typed ?int, casting is a no-op */
+            $castHeight = (int) $height;
+            $this->svgProperties['width'] = $width ?? round($castHeight * $this->svgWidth / $this->svgHeight);
+            $this->svgProperties['height'] = $height ?? round($castWidth * $this->svgHeight / $this->svgWidth);
         }
     }
 
@@ -270,10 +256,32 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
         $unit = substr($trimmedSize, -2);
 
         if (isset(self::PIXEL_MAP[$unit])) {
-            $trimmedSize = (float) $trimmedSize * (float) self::PIXEL_MAP[$unit];
+            /** @infection-ignore-all PIXEL_MAP values are already int|float, casting is a no-op */
+            $pixelFactor = (float) self::PIXEL_MAP[$unit];
+            $trimmedSize = (float) $trimmedSize * $pixelFactor;
         }
 
         return (int) round((float) $trimmedSize);
+    }
+
+    /**
+     * Load SVG file. Falls back to default if not found.
+     *
+     * @see $fallbackIcon
+     */
+    private function loadSvg(): void
+    {
+        /** @infection-ignore-all Icon::$name is already typed string, casting is a no-op */
+        $iconFile = (string) $this->icon->get('name');
+        /** @psalm-var DOMDocument $this->svg */
+        if (!$this->svg->load($iconFile, LIBXML_NOBLANKS)) {
+            $this->svg->load($this->fallbackIcon, LIBXML_NOBLANKS);
+        }
+
+        $this->removeDomNodes($this->svg, '//comment()');
+        /** @psalm-var DOMElement $this->svgElement */
+        $this->svgElement = $this->svg->getElementsByTagName('svg')->item(0);
+        $this->class = ['class' => $this->icon->get('class')];
     }
 
     /**
@@ -287,7 +295,9 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     {
         $xpath = new DOMXPath($dom);
         while ($node = $xpath->query($expression)->item(0)) {
-            if ($node instanceof DOMNode && $node->parentNode) {
+            /** @infection-ignore-all a node returned by an XPath query is always a DOMNode with a parent */
+            $canRemove = $node instanceof DOMNode && $node->parentNode;
+            if ($canRemove) {
                 $node->parentNode->removeChild($node);
             }
         }
