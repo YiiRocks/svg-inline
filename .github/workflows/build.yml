@@ -20,5 +20,3 @@ name: build
 jobs:
   ci:
     uses: YiiRocks/.github/.github/workflows/ci.yml@main
-    with:
-      default-branch: master
