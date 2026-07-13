@@ -15,6 +15,13 @@ SVG Images inline.
 [![GitHub](https://img.shields.io/github/license/yiirocks/svg-inline.svg)](https://github.com/yiirocks/svg-inline/blob/master/LICENSE)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/yiirocks/svg-inline/build.yml?branch=master)](https://github.com/yiirocks/svg-inline/actions)
 
+Stats for Nerds
+
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyiirocks%2Fsvg-inline%2Fbadges%2Fcoverage.json)](https://github.com/yiirocks/svg-inline/tree/badges)
+[![MSI](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyiirocks%2Fsvg-inline%2Fbadges%2Fmsi.json)](https://github.com/yiirocks/svg-inline/tree/badges)
+[![Tests](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyiirocks%2Fsvg-inline%2Fbadges%2Ftests.json)](https://github.com/yiirocks/svg-inline/tree/badges)
+[![Assertions](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyiirocks%2Fsvg-inline%2Fbadges%2Fassertions.json)](https://github.com/yiirocks/svg-inline/tree/badges)
+
 ## Installation
 
 The package could be installed via composer:

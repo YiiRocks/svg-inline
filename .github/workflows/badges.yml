@@ -1,0 +1,13 @@
+name: badges
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  badges:
+    uses: YiiRocks/.github/.github/workflows/badges.yml@main
