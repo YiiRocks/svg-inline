@@ -58,5 +58,3 @@ composer phpunit
 composer infection
 ```
 
-[![Maintainability](https://qlty.sh/badges/4cb2a6ba-29f4-4933-883c-1b1ff0f60825/maintainability.svg)](https://qlty.sh/gh/YiiRocks/projects/svg-inline)
-[![Codacy branch grade](https://img.shields.io/codacy/grade/1a826829576d45668a766abaae2321bb/master.svg)](https://app.codacy.com/gh/YiiRocks/svg-inline)

@@ -56,10 +56,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function removeAssets(string $basePath): void
     {
-        $handle = opendir($dir = $this->aliases->get($basePath));
-        if ($handle === false) {
-            throw new \Exception("Unable to open directory: $dir");
+        $dir = $this->aliases->get($basePath);
+        if (!is_dir($dir)) {
+            return;
         }
+        $handle = opendir($dir);
         while (($file = readdir($handle)) !== false) {
             if ($file === '.' || $file === '..' || $file === '.gitignore') {
                 continue;
