@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace YiiRocks\SvgInline;
 
+use Override;
 use Yiisoft\Yii\View\Renderer\CommonParametersInjectionInterface;
 use Yiisoft\Yii\View\Renderer\LayoutParametersInjectionInterface;
 
@@ -12,12 +13,12 @@ final class SvgInjections implements CommonParametersInjectionInterface, LayoutP
     private SvgInlineInterface $svg;
 
     public function __construct(
-        SvgInlineInterface $svg
+        SvgInlineInterface $svg,
     ) {
         $this->svg = $svg;
     }
 
-    #[\Override]
+    #[Override]
     public function getCommonParameters(): array
     {
         return [
@@ -25,7 +26,7 @@ final class SvgInjections implements CommonParametersInjectionInterface, LayoutP
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function getLayoutParameters(): array
     {
         return [

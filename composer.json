@@ -24,13 +24,13 @@
     ],
     "support": {
         "issues": "https://github.com/YiiRocks/svg-inline/issues",
-        "source": "https://github.com/YiiRocks/svg-inline/tree/master"
+        "source": "https://github.com/YiiRocks/svg-inline/tree/main"
     },
     "require": {
         "php": ">=8.3",
         "ext-dom": "*",
         "yiisoft/aliases": "^3.1",
-        "yiisoft/html": "^3.9 || ^4.0",
+        "yiisoft/html": "^4.0",
         "yiisoft/yii-view-renderer": "^7.3"
     },
     "require-dev": {
@@ -41,6 +41,7 @@
         "vimeo/psalm": "^6.0",
         "yiirocks/svg-inline-bootstrap": "*",
         "yiirocks/svg-inline-fontawesome": "*",
+        "yiisoft/code-style": "^1.1",
         "yiisoft/config": "^1.6",
         "yiisoft/di": "*",
         "yiisoft/files": "^2.0"
@@ -69,7 +70,7 @@
         "infection": "@php vendor/bin/infection --configuration=infection.json --min-msi=100 --min-covered-msi=100"
     },
     "scripts-descriptions": {
-        "php-cs-fixer": "Cleans to code with PHP Coding Standards Fixer.",
+        "php-cs-fixer": "PHP CS Fixer - tool for automatically fixing PHP coding standards issues.",
         "phpunit": "PHPUnit - programmer-oriented testing framework.",
         "psalm": "Psalm - static analysis tool for finding errors in PHP applications.",
         "infection": "Infection - PHP Mutation Testing Framework."
@@ -80,7 +81,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-main": "2.0.x-dev"
         },
         "config-plugin-options": {
             "source-directory": "config"

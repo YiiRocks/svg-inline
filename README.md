@@ -12,8 +12,8 @@ SVG Images inline.
 [![Packagist Version](https://img.shields.io/packagist/v/yiirocks/svg-inline.svg)](https://packagist.org/packages/yiirocks/svg-inline)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/yiirocks/svg-inline.svg)](https://php.net/)
 [![Packagist](https://img.shields.io/packagist/dt/yiirocks/svg-inline.svg)](https://packagist.org/packages/yiirocks/svg-inline)
-[![GitHub](https://img.shields.io/github/license/yiirocks/svg-inline.svg)](https://github.com/yiirocks/svg-inline/blob/master/LICENSE)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/yiirocks/svg-inline/build.yml?branch=master)](https://github.com/yiirocks/svg-inline/actions)
+[![GitHub](https://img.shields.io/github/license/yiirocks/svg-inline.svg)](https://github.com/yiirocks/svg-inline/blob/main/LICENSE)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/yiirocks/svg-inline/build.yml?branch=main)](https://github.com/yiirocks/svg-inline/actions)
 
 Stats for Nerds
 
@@ -57,4 +57,3 @@ composer psalm
 composer phpunit
 composer infection
 ```
-

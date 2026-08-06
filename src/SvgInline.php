@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace YiiRocks\SvgInline;
 
+use BadMethodCallException;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMXPath;
+use Override;
 use Psr\Container\ContainerInterface;
-use YiiRocks\SvgInline\Bootstrap\SvgInlineBootstrap;
-use YiiRocks\SvgInline\Bootstrap\SvgInlineBootstrapInterface;
-use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesome;
-use YiiRocks\SvgInline\FontAwesome\SvgInlineFontAwesomeInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\NoEncodeStringableInterface;
@@ -20,12 +18,15 @@ use Yiisoft\Html\NoEncodeStringableInterface;
 use function explode;
 use function libxml_clear_errors;
 use function libxml_use_internal_errors;
+use function method_exists;
 use function round;
+use function sprintf;
 use function ucfirst;
 
 /**
  * SvgInline provides a quick and easy way to access icons.
  */
+/** @psalm-suppress ClassMustBeFinal Extended by icon-set packages, e.g. yiirocks/svg-inline-bootstrap. */
 class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
 {
     /** @var array<string, float|int> Values for converting various units to pixels */
@@ -57,6 +58,13 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     /** @psalm-suppress PropertyNotSetInConstructor */
     protected string $fill;
 
+    /**
+     * @var IconInterface icon properties. Protected (not private) so that icon-set subclasses (e.g.
+     *      `SvgInlineBootstrap`) can read/write it directly in their own `name()`/`setSvgSize()` overrides,
+     *      instead of keeping a redundant property of their own in sync with this one.
+     */
+    protected IconInterface $icon;
+
     /** @var int height of the svg */
     protected ?int $svgHeight = null;
 
@@ -69,8 +77,13 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     /** $var ContainerInterface $container */
     private ContainerInterface $container;
 
-    /** @var IconInterface icon properties */
-    private IconInterface $icon;
+    /**
+     * @var array<string, class-string<IconSetInterface>> Map of `$svg->{key}()` method names to the
+     *      {@see IconSetInterface} service id that implements them, contributed by extension packages
+     *      (e.g. `yiirocks/svg-inline-bootstrap`, `yiirocks/svg-inline-fontawesome`) via the
+     *      `yiirocks/svg-inline.iconSets` config param.
+     */
+    private array $iconSets;
 
     /** @var DOMDocument SVG file */
     private ?DOMDocument $svg = null;
@@ -81,32 +94,75 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     /**
      * @param Aliases $aliases
      * @param ContainerInterface $container
+     * @param array<string, class-string<IconSetInterface>> $iconSets
      */
     public function __construct(
         Aliases $aliases,
         ContainerInterface $container,
-        IconInterface $icon
+        IconInterface $icon,
+        array $iconSets = [],
     ) {
         $this->aliases = $aliases;
         $this->container = $container;
         $this->icon = $icon;
+        $this->iconSets = $iconSets;
     }
 
     /**
-     * Magic function, sets icon properties.
+     * Magic function. Delegates to a registered icon set (e.g. `bootstrap()`, `fai()`) if `$name` matches
+     * one, otherwise sets an icon property.
      *
-     * @param string $name  property name
-     * @param array  $value property value
-     * @return self updated object
+     * @param string $name  icon set name, or property name
+     * @param array  $value icon set arguments, or property value
+     * @return SvgInlineInterface updated object
      */
-    #[\Override]
+    #[Override]
     public function __call(string $name, array $value): SvgInlineInterface
     {
-        $new = clone $this;
+        if (isset($this->iconSets[$name])) {
+            /** @psalm-var IconSetInterface $original */
+            $original = $this->container->get($this->iconSets[$name]);
+            /**
+             * A clone, so that mutating this chain never affects the container's cached instance (or
+             * anything previously chained from it).
+             */
+            $set = clone $original;
+            /**
+             * @psalm-suppress InaccessibleProperty $icon is private on SvgInline, but $set is always an
+             *      instance of it (icon sets extend SvgInline) - see IconSetInterface.
+             * @psalm-suppress NoInterfaceProperties
+             * @psalm-suppress MixedArgument icon set arguments are validated by the icon set's own
+             *      name() signature at call time
+             */
+            $set->icon = $set->name(...$value);
+
+            return $set;
+        }
+
         /** @infection-ignore-all PHP method names are case-insensitive, so ucfirst() cannot be observed */
         $function = 'set' . ucfirst($name);
+        if (!method_exists($this->icon, $function)) {
+            throw new BadMethodCallException(sprintf(
+                'Call to undefined method %s::%s(). It is not a registered icon set (is its package '
+                    . 'installed? see the "yiirocks/svg-inline" "iconSets" config param) nor a valid icon '
+                    . 'property.',
+                static::class,
+                $name,
+            ));
+        }
+
+        $new = clone $this;
         $new->icon->$function($value[0]);
         return $new;
+    }
+
+    /**
+     * Deep-clones the icon so that mutating a chained call (e.g. `->class()`) never affects the object
+     * it was chained from.
+     */
+    public function __clone()
+    {
+        $this->icon = clone $this->icon;
     }
 
     /**
@@ -120,54 +176,20 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     }
 
     /**
-     * Sets the Bootstrap Icon
-     *
-     * @param string $name name of the icon
-     * @return SvgInlineInterface component object
-     */
-    #[\Override]
-    public function bootstrap(string $name): SvgInlineInterface
-    {
-        /** @psalm-var SvgInlineBootstrap $bootstrap */
-        $bootstrap = $this->container->get(SvgInlineBootstrapInterface::class);
-        /** @psalm-suppress InaccessibleProperty */
-        $bootstrap->icon = $bootstrap->name($name);
-
-        return $bootstrap;
-    }
-
-    /**
-     * Sets the Font Awesome Icon
-     *
-     * @param string $name name of the icon
-     * @param null|string $style style of the icon
-     * @return SvgInlineInterface component object
-     */
-    #[\Override]
-    public function fai(string $name, ?string $style = null): SvgInlineInterface
-    {
-        /** @psalm-var SvgInlineFontAwesome $fai */
-        $fai = $this->container->get(SvgInlineFontAwesomeInterface::class);
-        /** @psalm-suppress InaccessibleProperty */
-        $fai->icon = $fai->name($name, $style);
-
-        return $fai;
-    }
-
-    /**
      * Sets the filename
      *
      * @param string $file name of the icon, or filename
      * @return SvgInlineInterface component object
      */
-    #[\Override]
+    #[Override]
     public function file(string $file): SvgInlineInterface
     {
-        $this->icon = new Icon();
+        $new = clone $this;
+        $new->icon = new Icon();
         $fileName = $this->aliases->get($file);
-        $this->icon->setName($fileName);
+        $new->icon->setName($fileName);
 
-        return $this;
+        return $new;
     }
 
     /**

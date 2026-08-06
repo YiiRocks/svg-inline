@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace YiiRocks\SvgInline\tests;
 
+use Exception;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -20,8 +21,8 @@ use Yiisoft\Files\FileHelper;
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected Aliases $aliases;
-    protected SvgInline $svgInline;
     protected ContainerInterface $container;
+    protected SvgInline $svgInline;
 
     protected function setUp(): void
     {
@@ -29,13 +30,12 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $config = new Config(
             new ConfigPaths(dirname(__DIR__), 'config'),
             '/',
-            [RecursiveMerge::groups('params')]
+            [RecursiveMerge::groups('params')],
         );
         $containerConfig = ContainerConfig::create()
             ->withDefinitions(
                 $config->get('di')
-                +
-                [LoggerInterface::class => NullLogger::class]
+                + [LoggerInterface::class => NullLogger::class],
             );
         $this->container = new Container($containerConfig);
         $this->aliases = $this->container->get(Aliases::class);
@@ -61,6 +61,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             return;
         }
         $handle = opendir($dir);
+        if ($handle === false) {
+            throw new Exception("Unable to open directory: $dir");
+        }
         while (($file = readdir($handle)) !== false) {
             if ($file === '.' || $file === '..' || $file === '.gitignore') {
                 continue;

@@ -2,6 +2,8 @@
 
 namespace YiiRocks\SvgInline\tests;
 
+use BadMethodCallException;
+
 class SvgInlineTest extends TestCase
 {
     public function testBasic(): void
@@ -23,6 +25,24 @@ class SvgInlineTest extends TestCase
         $this->assertStringNotContainsString('height', $this->svgInline->fai('cookie')->render());
     }
 
+    public function testBootstrapCloneImmutabilityDoesNotLeakBetweenCalls(): void
+    {
+        $award = $this->svgInline->bootstrap('award');
+        $activity = $this->svgInline->bootstrap('activity');
+
+        $this->assertStringContainsString('<title>Award</title>', $award->render());
+        $this->assertStringContainsString('<title>Activity</title>', $activity->render());
+    }
+
+    public function testBootstrapCloneImmutabilityDoesNotLeakPropertyChanges(): void
+    {
+        $award = $this->svgInline->bootstrap('award');
+        $awardWithWidth = $award->width(42);
+
+        $this->assertStringNotContainsString('width', $award->render());
+        $this->assertStringContainsString('width="42"', $awardWithWidth->render());
+    }
+
     public function testClass(): void
     {
         $this->assertStringContainsString('class="yourClass"', $this->svgInline->file('@root/tests/test1.svg')->class('yourClass')->render());
@@ -31,6 +51,24 @@ class SvgInlineTest extends TestCase
     public function testCloneImmutability(): void
     {
         $this->assertNotSame($this->svgInline, $this->svgInline->class('yourClass'));
+    }
+
+    public function testCloneImmutabilityDoesNotLeakBetweenCalls(): void
+    {
+        $first = $this->svgInline->file('@root/tests/test1.svg');
+        $second = $this->svgInline->file('@root/tests/test2.svg');
+
+        $this->assertStringContainsString('<title>Test1</title>', $first->render());
+        $this->assertStringContainsString('<title>Test2</title>', $second->render());
+    }
+
+    public function testCloneImmutabilityDoesNotLeakPropertyChanges(): void
+    {
+        $base = $this->svgInline->file('@root/tests/test1.svg');
+        $withClass = $base->class('yourClass');
+
+        $this->assertStringNotContainsString('class="yourClass"', $base->render());
+        $this->assertStringContainsString('class="yourClass"', $withClass->render());
     }
 
     public function testCss(): void
@@ -112,6 +150,24 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('<title>Test1</title>', $this->svgInline->file('@root/tests/test1.svg')->render());
     }
 
+    public function testToString(): void
+    {
+        $file = $this->svgInline->file('@root/tests/test1.svg');
+        $this->assertSame($file->render(), (string) $file);
+    }
+
+    public function testUnknownMethodThrowsBadMethodCallException(): void
+    {
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage(
+            'Call to undefined method YiiRocks\SvgInline\SvgInline::nonexistentMethod(). It is not a '
+                . 'registered icon set (is its package installed? see the "yiirocks/svg-inline" '
+                . '"iconSets" config param) nor a valid icon property.',
+        );
+
+        $this->svgInline->file('@root/tests/test1.svg')->nonexistentMethod('x');
+    }
+
     public function testViewBoxOriginAndPrecision(): void
     {
         $this->assertStringContainsString('height="200"', $this->svgInline->file('@root/tests/test4.svg')->width(100)->render());
@@ -125,11 +181,5 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test1.svg')->width(42)->render());
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test2.svg')->width(42)->render());
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test3.svg')->width(42)->render());
-    }
-
-    public function testToString(): void
-    {
-        $file = $this->svgInline->file('@root/tests/test1.svg');
-        $this->assertSame($file->render(), (string) $file);
     }
 }

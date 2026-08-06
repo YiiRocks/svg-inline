@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace YiiRocks\SvgInline;
 
+use Override;
+
 /**
  * Icon class to store all icon properties.
  */
+/** @psalm-suppress ClassMustBeFinal Extended by icon-set packages, e.g. yiirocks/svg-inline-bootstrap. */
 class Icon implements IconInterface
 {
     /** @var string Additional custom classes */
@@ -50,7 +53,7 @@ class Icon implements IconInterface
      * @param string $key
      * @return mixed
      */
-    #[\Override]
+    #[Override]
     public function get(string $key): mixed
     {
         return $this->$key ?? null;
@@ -60,7 +63,7 @@ class Icon implements IconInterface
      * @see $name
      * @return string
      */
-    #[\Override]
+    #[Override]
     public function getTitle(): string
     {
         return $this->title ?? ucfirst(basename($this->name, '.svg'));

@@ -13,6 +13,7 @@ return [
     IconInterface::class => Icon::class,
     SvgInlineInterface::class => [
         'class' => SvgInline::class,
+        '__construct()' => ['iconSets' => $params['yiirocks/svg-inline']['iconSets']],
         'setFallbackIcon()' => [$params['yiirocks/svg-inline']['fallbackIcon']],
         'setFill()' => [$params['yiirocks/svg-inline']['fill']],
     ],

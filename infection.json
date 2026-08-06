@@ -2,13 +2,10 @@
     "source": {
         "directories": [
             "src"
-        ],
-        "excludes": [
-            "resources"
         ]
     },
     "timeout": 60,
-    "maxTimeouts": 1000,
+    "threads": "max",
     "minMsi": 100,
     "minCoveredMsi": 100
 }

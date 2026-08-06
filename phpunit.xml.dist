@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          cacheResult="false"
          requireCoverageMetadata="false"
@@ -26,8 +26,8 @@
     </include>
   </source>
   <coverage>
-      <report>
-          <text outputFile="php://stdout" showOnlySummary="true"/>
-      </report>
+    <report>
+      <text outputFile="php://stdout" showOnlySummary="true"/>
+    </report>
   </coverage>
 </phpunit>

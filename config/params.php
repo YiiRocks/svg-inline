@@ -10,6 +10,9 @@ return [
     'yiirocks/svg-inline' => [
         'fallbackIcon' => '@vendor/yiirocks/svg-inline/src/fallbackIcon.svg',
         'fill' => 'currentColor',
+        // Extension packages (e.g. yiirocks/svg-inline-bootstrap) register themselves here,
+        // mapping the `$svg->{key}()` method name to their IconSetInterface service id.
+        'iconSets' => [],
     ],
 
     'yiisoft/view' => [

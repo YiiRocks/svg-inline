@@ -18,16 +18,6 @@ final class SvgInjectionsTest extends TestCase
         $this->injections = $this->container->get(SvgInjections::class);
     }
 
-    public function testImplementsCommonParametersInjection(): void
-    {
-        $this->assertInstanceOf(CommonParametersInjectionInterface::class, $this->injections);
-    }
-
-    public function testImplementsLayoutParametersInjection(): void
-    {
-        $this->assertInstanceOf(LayoutParametersInjectionInterface::class, $this->injections);
-    }
-
     public function testGetCommonParametersContainsSvgInline(): void
     {
         $params = $this->injections->getCommonParameters();
@@ -40,5 +30,15 @@ final class SvgInjectionsTest extends TestCase
         $params = $this->injections->getLayoutParameters();
         $this->assertArrayHasKey('svg', $params);
         $this->assertSame($this->svgInline, $params['svg']);
+    }
+
+    public function testImplementsCommonParametersInjection(): void
+    {
+        $this->assertInstanceOf(CommonParametersInjectionInterface::class, $this->injections);
+    }
+
+    public function testImplementsLayoutParametersInjection(): void
+    {
+        $this->assertInstanceOf(LayoutParametersInjectionInterface::class, $this->injections);
     }
 }
