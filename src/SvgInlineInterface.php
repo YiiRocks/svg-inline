@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace YiiRocks\SvgInline;
 
+use Yiisoft\Html\NoEncodeStringableInterface;
+
 /*
  * @method class(string $value): self
  * @method css(array $value): self
@@ -21,7 +23,7 @@ namespace YiiRocks\SvgInline;
  * @method bootstrap(string $name): self First-party, see `yiirocks/svg-inline-bootstrap`.
  * @method fai(string $name, ?string $style = null): self First-party, see `yiirocks/svg-inline-fontawesome`.
  */
-interface SvgInlineInterface
+interface SvgInlineInterface extends NoEncodeStringableInterface
 {
     public function __call(string $name, array $value): self;
 
