@@ -13,36 +13,6 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('stroke-width="40" stroke="currentColor" fill="none"', $this->svgInline->file('nonexistent.svg')->render());
     }
 
-    public function testBasicBootstrap(): void
-    {
-        $this->assertStringNotContainsString('width', $this->svgInline->bootstrap('award')->render());
-        $this->assertStringNotContainsString('height', $this->svgInline->bootstrap('award')->render());
-    }
-
-    public function testBasicFontAwesome(): void
-    {
-        $this->assertStringNotContainsString('width', $this->svgInline->fai('cookie')->render());
-        $this->assertStringNotContainsString('height', $this->svgInline->fai('cookie')->render());
-    }
-
-    public function testBootstrapCloneImmutabilityDoesNotLeakBetweenCalls(): void
-    {
-        $award = $this->svgInline->bootstrap('award');
-        $activity = $this->svgInline->bootstrap('activity');
-
-        $this->assertStringContainsString('<title>Award</title>', $award->render());
-        $this->assertStringContainsString('<title>Activity</title>', $activity->render());
-    }
-
-    public function testBootstrapCloneImmutabilityDoesNotLeakPropertyChanges(): void
-    {
-        $award = $this->svgInline->bootstrap('award');
-        $awardWithWidth = $award->width(42);
-
-        $this->assertStringNotContainsString('width', $award->render());
-        $this->assertStringContainsString('width="42"', $awardWithWidth->render());
-    }
-
     public function testClass(): void
     {
         $this->assertStringContainsString('class="yourClass"', $this->svgInline->file('@root/tests/test1.svg')->class('yourClass')->render());
@@ -96,6 +66,38 @@ class SvgInlineTest extends TestCase
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test1.svg')->height(42)->render());
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test2.svg')->height(42)->render());
         $this->assertStringContainsString('width="42" height="42"', $this->svgInline->file('@root/tests/test3.svg')->height(42)->render());
+    }
+
+    public function testIconSetCloneImmutabilityDoesNotLeakBetweenCalls(): void
+    {
+        $award = $this->svgInline->iconset('award');
+        $activity = $this->svgInline->iconset('activity');
+
+        $this->assertStringContainsString('<title>Award</title>', $award->render());
+        $this->assertStringContainsString('<title>Activity</title>', $activity->render());
+    }
+
+    public function testIconSetCloneImmutabilityDoesNotLeakPropertyChanges(): void
+    {
+        $award = $this->svgInline->iconset('award');
+        $awardWithWidth = $award->width(42);
+
+        $this->assertStringNotContainsString('width', $award->render());
+        $this->assertStringContainsString('width="42"', $awardWithWidth->render());
+    }
+
+    public function testIconSetDispatch(): void
+    {
+        // A registered icon set (see FakeIconSet, wired up in TestCase) is resolved by __call() and
+        // renders the file its name() resolved to. The derived title proves the right icon was built;
+        // the CSS class proves the subclass's setSvgSize() override ran, and (like the real icon sets)
+        // it sizes via that class rather than width/height attributes, which are stripped.
+        $result = $this->svgInline->iconset('award')->render();
+
+        $this->assertStringContainsString('<title>Award</title>', $result);
+        $this->assertStringContainsString('class="iconset"', $result);
+        $this->assertStringNotContainsString('width', $result);
+        $this->assertStringNotContainsString('height', $result);
     }
 
     public function testId(): void

@@ -10,13 +10,7 @@ use Yiisoft\Yii\View\Renderer\LayoutParametersInjectionInterface;
 
 final class SvgInjections implements CommonParametersInjectionInterface, LayoutParametersInjectionInterface
 {
-    private SvgInlineInterface $svg;
-
-    public function __construct(
-        SvgInlineInterface $svg,
-    ) {
-        $this->svg = $svg;
-    }
+    public function __construct(private SvgInlineInterface $svg) {}
 
     #[Override]
     public function getCommonParameters(): array

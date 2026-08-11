@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use YiiRocks\SvgInline\SvgInline;
 use YiiRocks\SvgInline\SvgInlineInterface;
+use YiiRocks\SvgInline\tests\Support\FakeIconSet;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Config\Config;
 use Yiisoft\Config\ConfigPaths;
@@ -32,11 +33,22 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             '/',
             [RecursiveMerge::groups('params')],
         );
-        $containerConfig = ContainerConfig::create()
-            ->withDefinitions(
-                $config->get('di')
-                + [LoggerInterface::class => NullLogger::class],
-            );
+        $definitions = $config->get('di')
+            + [
+                LoggerInterface::class => NullLogger::class,
+                FakeIconSet::class => [
+                    'class' => FakeIconSet::class,
+                    'setFallbackIcon()' => ['@root/src/fallbackIcon.svg'],
+                    'setFill()' => ['currentColor'],
+                ],
+            ];
+        $definitions[SvgInlineInterface::class] = [
+            'class' => SvgInline::class,
+            '__construct()' => ['iconSets' => ['iconset' => FakeIconSet::class]],
+            'setFallbackIcon()' => ['@root/src/fallbackIcon.svg'],
+            'setFill()' => ['currentColor'],
+        ];
+        $containerConfig = ContainerConfig::create()->withDefinitions($definitions);
         $this->container = new Container($containerConfig);
         $this->aliases = $this->container->get(Aliases::class);
         $this->aliases->set('@root', dirname(__DIR__));

@@ -42,9 +42,6 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
         'mm' => 16 / (25.4 / 6),
     ];
 
-    /** @var Aliases Object used to resolve aliases */
-    protected Aliases $aliases;
-
     /** @var array Class property */
     /** @psalm-suppress PropertyNotSetInConstructor */
     protected array $class;
@@ -58,13 +55,6 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
     /** @psalm-suppress PropertyNotSetInConstructor */
     protected string $fill;
 
-    /**
-     * @var IconInterface icon properties. Protected (not private) so that icon-set subclasses (e.g.
-     *      `SvgInlineBootstrap`) can read/write it directly in their own `name()`/`setSvgSize()` overrides,
-     *      instead of keeping a redundant property of their own in sync with this one.
-     */
-    protected IconInterface $icon;
-
     /** @var int height of the svg */
     protected ?int $svgHeight = null;
 
@@ -73,17 +63,6 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
 
     /** @var int width of the svg */
     protected ?int $svgWidth = null;
-
-    /** $var ContainerInterface $container */
-    private ContainerInterface $container;
-
-    /**
-     * @var array<string, class-string<IconSetInterface>> Map of `$svg->{key}()` method names to the
-     *      {@see IconSetInterface} service id that implements them, contributed by extension packages
-     *      (e.g. `yiirocks/svg-inline-bootstrap`, `yiirocks/svg-inline-fontawesome`) via the
-     *      `yiirocks/svg-inline.iconSets` config param.
-     */
-    private array $iconSets;
 
     /** @var DOMDocument SVG file */
     private ?DOMDocument $svg = null;
@@ -97,16 +76,16 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
      * @param array<string, class-string<IconSetInterface>> $iconSets
      */
     public function __construct(
-        Aliases $aliases,
-        ContainerInterface $container,
-        IconInterface $icon,
-        array $iconSets = [],
-    ) {
-        $this->aliases = $aliases;
-        $this->container = $container;
-        $this->icon = $icon;
-        $this->iconSets = $iconSets;
-    }
+        protected Aliases $aliases,
+        private ContainerInterface $container,
+        /**
+         * @var IconInterface icon properties. Protected (not private) so that icon-set subclasses (e.g.
+         *      `SvgInlineBootstrap`) can read/write it directly in their own `name()`/`setSvgSize()` overrides,
+         *      instead of keeping a redundant property of their own in sync with this one.
+         */
+        protected IconInterface $icon,
+        private array $iconSets = [],
+    ) {}
 
     /**
      * Magic function. Delegates to a registered icon set (e.g. `bootstrap()`, `fai()`) if `$name` matches
@@ -319,7 +298,9 @@ class SvgInline implements NoEncodeStringableInterface, SvgInlineInterface
         while ($node = $xpath->query($expression)->item(0)) {
             /** @infection-ignore-all a node returned by an XPath query is always a DOMNode with a parent */
             $canRemove = $node instanceof DOMNode && $node->parentNode;
+            /** @infection-ignore-all negating this would create an infinite loop (node never removed) */
             if ($canRemove) {
+                /** @infection-ignore-all removing this would create an infinite loop (node never removed) */
                 $node->parentNode->removeChild($node);
             }
         }

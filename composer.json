@@ -38,9 +38,8 @@
         "httpsoft/http-message": "@stable",
         "infection/infection": "^0.34.0",
         "phpunit/phpunit": "@stable",
+        "rector/rector": "^2.1.1",
         "vimeo/psalm": "^6.0",
-        "yiirocks/svg-inline-bootstrap": "*",
-        "yiirocks/svg-inline-fontawesome": "*",
         "yiisoft/code-style": "^1.1",
         "yiisoft/config": "^1.6",
         "yiisoft/di": "*",
@@ -64,16 +63,18 @@
         }
     ],
     "scripts": {
+        "infection": "@php vendor/bin/infection --configuration=infection.json --min-msi=100 --min-covered-msi=100",
         "php-cs-fixer": "@php vendor/bin/php-cs-fixer fix",
         "phpunit": "@php vendor/bin/phpunit",
         "psalm": "@php vendor/bin/psalm",
-        "infection": "@php vendor/bin/infection --configuration=infection.json --min-msi=100 --min-covered-msi=100"
+        "rector": "@php vendor/bin/rector process"
     },
     "scripts-descriptions": {
+        "infection": "Infection - PHP Mutation Testing Framework.",
         "php-cs-fixer": "PHP CS Fixer - tool for automatically fixing PHP coding standards issues.",
         "phpunit": "PHPUnit - programmer-oriented testing framework.",
         "psalm": "Psalm - static analysis tool for finding errors in PHP applications.",
-        "infection": "Infection - PHP Mutation Testing Framework."
+        "rector": "Rector - automated tool for refactoring and upgrading PHP code."
     },
     "suggest": {
         "yiirocks/svg-inline-bootstrap": "Bootstrap Icons are designed to work with Bootstrap components, from form controls to navigation.",
