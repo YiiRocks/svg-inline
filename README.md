@@ -24,8 +24,6 @@ Stats for Nerds
 
 ## Installation
 
-The package could be installed via composer:
-
 ```bash
 composer require yiirocks/svg-inline
 ```
@@ -45,15 +43,4 @@ The default configuration will enable `$svg` in any view.
 echo $svg->file('@assets/image.svg');
 ```
 
-Available options can be found in the [documentation](https://www.yii.rocks/svg-inline/).
-
-## Unit testing
-
-The package is tested with [Psalm](https://psalm.dev/), [PHPUnit](https://phpunit.de/) and
-[Infection](https://infection.github.io/) mutation testing. To run tests:
-
-```bash
-composer psalm
-composer phpunit
-composer infection
-```
+The complete reference guide is available at [Yii.Rocks](https://www.yii.rocks/svg-inline/).
